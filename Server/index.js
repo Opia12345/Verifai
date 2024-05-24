@@ -4,8 +4,8 @@ const jwt = require("jsonwebtoken");
 const User = require("./Models/User");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const Register = require("./Controllers/Register");
 require("dotenv").config();
-
 
 //CONFIGURATIONS
 const app = express();
@@ -30,3 +30,5 @@ mongoose
   .catch((err) => {
     console.log(err.message);
   });
+
+app.post("/register", Register.Register);
