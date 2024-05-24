@@ -10,6 +10,7 @@ const updatePassword = require("./Controllers/UpdatePassword");
 const signIn = require("./Controllers/SignIn");
 const PasswordReset = require("./Controllers/ResetPassword");
 const resendVerification = require("./Controllers/ResendVerification");
+const ResendOTP = require("./Controllers/ResendOTP");
 require("dotenv").config();
 
 //CONFIGURATIONS
@@ -42,3 +43,4 @@ app.patch(`/email-update/:userId`, updateEmail.updateEmail);
 app.patch(`/password-update/:userId`, updatePassword.updatePassword);
 app.post("/passwordReset", PasswordReset.PasswordReset);
 app.post("/resend-verification/:userId", resendVerification.resendVerification);
+app.post("/resend-OTP/:userId", ResendOTP.ResendOTP);
