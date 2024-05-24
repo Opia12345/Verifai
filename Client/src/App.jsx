@@ -1,8 +1,9 @@
 import "../tailwind/Output.css";
+import Home from "./Pages/Home";
 function App() {
   return (
     <>
-      <h1 className="text-blue-500">Hello World!</h1>
+      <Home />
     </>
   );
 }
