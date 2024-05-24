@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const Register = require("./Controllers/Register");
 const updateEmail = require("./Controllers/UpdateEmail");
+const updatePassword = require("./Controllers/UpdatePassword");
 require("dotenv").config();
 
 //CONFIGURATIONS
@@ -34,3 +35,4 @@ mongoose
 
 app.post("/register", Register.Register);
 app.patch(`/email-update/:userId`, updateEmail.updateEmail);
+app.patch(`/password-update/:userId`, updatePassword.updatePassword);
