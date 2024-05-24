@@ -7,6 +7,7 @@ const mongoose = require("mongoose");
 const Register = require("./Controllers/Register");
 const updateEmail = require("./Controllers/UpdateEmail");
 const updatePassword = require("./Controllers/UpdatePassword");
+const signIn = require("./Controllers/SignIn");
 require("dotenv").config();
 
 //CONFIGURATIONS
@@ -34,5 +35,6 @@ mongoose
   });
 
 app.post("/register", Register.Register);
+app.post("/signin", signIn.signIn);
 app.patch(`/email-update/:userId`, updateEmail.updateEmail);
 app.patch(`/password-update/:userId`, updatePassword.updatePassword);
