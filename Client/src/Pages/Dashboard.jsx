@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import Sidenav from "../Components/Sidenav";
 import {
   faArrowRight,
+  faCopy,
   faEllipsis,
+  faEye,
+  faEyeSlash,
+  faLink,
   faLock,
   faMagnifyingGlass,
   faPlus,
@@ -15,6 +19,7 @@ import { CSSTransition } from "react-transition-group";
 const Dashboard = () => {
   const [search, setSearch] = useState("");
   const [popup, setPopup] = useState(false);
+  const [password, setPassword] = useState(false);
 
   const styles = {
     enter: "transform -translate-x-full opacity-0",
@@ -106,27 +111,49 @@ const Dashboard = () => {
             className="fixed top-10 right-10 text-xl cursor-pointer"
             onClick={() => setPopup(false)}
           />
-          <div className="bg-slate-900 p-12 rounded-md">
-            <div className="flex flex-col text-center items-center gap-4">
+          <div className="bg-slate-900 p-12 rounded-md lg:w-[60%]">
+            <div className="flex justify-center items-center flex-col">
               <img src="/apple.svg" className="w-[40px]" />
               <div>
                 <h5 className="text-xl font-bold">Apple</h5>
               </div>
-              <span className="flex items-center bg-slate-200/20 w-full gap-2 rounded-md p-2 mt-4">
+            </div>
+            <div className="flex flex-col gap-4 items-start mt-6">
+              <label>Email Address</label>
+              <span className="flex items-center bg-slate-200/20 w-full gap-2 rounded-md p-2">
                 <FontAwesomeIcon icon={faUser} />
                 <input
                   type="email"
                   placeholder="Email Address"
                   className="bg-transparent text-white font-light text-xs w-full outline-none"
                 />
+                <FontAwesomeIcon icon={faCopy} />
               </span>
+
+              <label>Password</label>
               <span className="flex items-center bg-slate-200/20 w-full gap-2 rounded-md p-2">
                 <FontAwesomeIcon icon={faLock} />
                 <input
-                  type="password"
+                  type={password ? "text" : "password"}
                   placeholder="Password"
                   className="bg-transparent text-white font-light text-xs w-full outline-none"
                 />
+                <FontAwesomeIcon
+                  icon={password ? faEye : faEyeSlash}
+                  onClick={() => setPassword(!password)}
+                />
+                <FontAwesomeIcon icon={faCopy} />
+              </span>
+
+              <label>URL</label>
+              <span className="flex items-center bg-slate-200/20 w-full gap-2 rounded-md p-2">
+                <FontAwesomeIcon icon={faLink} />
+                <input
+                  type="text"
+                  placeholder="Url"
+                  className="bg-transparent text-white font-light text-xs w-full outline-none"
+                />
+                <FontAwesomeIcon icon={faCopy} />
               </span>
               <button className="flex items-center gap-2 border rounded-md py-2 px-6 hover:bg-slate-200/10 duration-300 ease-in-out transition-all">
                 <FontAwesomeIcon icon={faArrowRight} className="" />
