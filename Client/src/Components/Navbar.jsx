@@ -110,14 +110,16 @@ const Navbar = () => {
         className="p-4 fixed w-full inset-x-0 top-0 z-50 flex justify-around"
       >
         <span className="flex items-center space-x-3">
-          <img
-            onClick={() => handleNavLinkClick("home")}
-            className={`w-[40px] cursor-pointer ${
-              activeLink === "home" ? "underline" : "text-slate-200/40"
-            }`}
-            src="logo.png"
-            alt=""
-          />
+          <NavLink to="/">
+            <img
+              onClick={() => handleNavLinkClick("home")}
+              className={`w-[40px] cursor-pointer ${
+                activeLink === "home" ? "underline" : "text-slate-200/40"
+              }`}
+              src="logo.png"
+              alt=""
+            />
+          </NavLink>
         </span>
 
         <span className="items-center space-x-3 md:flex hidden">
@@ -148,9 +150,11 @@ const Navbar = () => {
         </span>
 
         <span className="flex items-center gap-4">
-          <button className="flex cursor-pointer items-center hover:bg-transparent text-black py-2 px-6">
-            Login
-          </button>
+          <NavLink to="/dashboard">
+            <button className="flex cursor-pointer items-center hover:bg-transparent text-black py-2 px-6">
+              Login
+            </button>
+          </NavLink>
           <button className="flex cursor-pointer items-center hover:bg-transparent text-white hover:text-black border transition-all ease-in duration-300 bg-black py-2 px-6 rounded-3xl">
             SignUp
           </button>
