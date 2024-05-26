@@ -10,7 +10,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { CSSTransition } from "react-transition-group";
 import Sidenav from "../Components/Sidenav";
-import { faPaperPlane } from "@fortawesome/free-regular-svg-icons";
+import {
+  faEnvelope,
+  faPaperPlane,
+  faUser,
+} from "@fortawesome/free-regular-svg-icons";
 
 const Help = () => {
   const [submit, setSubmit] = useState(false);
@@ -106,13 +110,8 @@ const Help = () => {
       <Sidenav />
       <section className="lg:ml-[250px] lg:p-8 p-4 h-screen">
         <h1 className="font-bold text-3xl">Contact Us</h1>
-        <p className="text-slate-400 mt-4 text-sm mb-4">
-          Have a question or need assistance? Contact us today and let our team
-          of experts.
-        </p>
-        <div className="w-full h-[0.5px] bg-slate-400"></div>
         <div className="w-full lg:p-10 flex items-center justify-center relative flex-col">
-          <div className="w-full -mt-12 p-4">
+          <div className="w-full -mt-20 p-4">
             <div className="flex lg:p-10 mt-12 pb-10 relative rounded-lg w-full">
               <Formik
                 initialValues={initialValues}
@@ -121,52 +120,47 @@ const Help = () => {
               >
                 <Form className="mt-4 w-full flex flex-col" id="emailForm">
                   <span className="grid lg:grid-cols-2 grid-cols-1 gap-4">
-                    <span className="flex flex-col mb-8">
-                      <label htmlFor="" className="mb-2 md:text-xl text-xl">
-                        Name
-                      </label>
+                    <span className="flex items-center bg-slate-200/20 gap-2 rounded-md p-2 mt-4">
+                      <FontAwesomeIcon icon={faUser} />
                       <Field
                         type="text"
                         name="name"
                         placeholder="Name"
-                        className="bg-transparent focus-within-border-links p-2 outline-none rounded-lg  border"
-                      />
-                      <ErrorMessage
-                        name="name"
-                        component="div"
-                        className="text-red-500"
+                        className="bg-transparent text-white font-light text-xs w-full outline-none"
                       />
                     </span>
+                    <ErrorMessage
+                      name="name"
+                      component="div"
+                      className="text-red-500"
+                    />
 
-                    <span className="flex flex-col mb-8">
-                      <label htmlFor="" className="md:text-xl text-xl">
-                        Email Address
-                      </label>
+                    <span className="flex items-center bg-slate-200/20 gap-2 rounded-md p-2 mt-4">
+                      <FontAwesomeIcon icon={faEnvelope} />
                       <Field
                         type="email"
                         name="email"
                         placeholder="johndoe@gmail.com"
-                        className="bg-transparent focus-within-border-links mt-2 p-2 outline-none rounded-lg  border"
-                      />
-                      <ErrorMessage
-                        name="email"
-                        component="div"
-                        className="text-red-500"
+                        className="bg-transparent text-white font-light text-xs w-full outline-none"
                       />
                     </span>
+                    <ErrorMessage
+                      name="email"
+                      component="div"
+                      className="text-red-500"
+                    />
                   </span>
 
-                  <label htmlFor="" className="mb-2 md:text-xl text-xl">
-                    Message
-                  </label>
-                  <Field
-                    as="textarea"
-                    type="text"
-                    name="message"
-                    placeholder="Message"
-                    rows={10}
-                    className="bg-transparent focus-within-border-links p-2 outline-none rounded-lg  border"
-                  />
+                  <span className="flex items-center bg-slate-200/20 gap-2 rounded-md p-2 mt-4">
+                    <Field
+                      as="textarea"
+                      type="text"
+                      name="message"
+                      placeholder="Message"
+                      rows={10}
+                      className="bg-transparent text-white font-light text-xs w-full outline-none"
+                    />
+                  </span>
                   <ErrorMessage
                     name="message"
                     component="div"
