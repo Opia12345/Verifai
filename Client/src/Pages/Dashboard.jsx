@@ -53,6 +53,34 @@ const Dashboard = () => {
       password: "12345",
       url: "https://x.com",
     },
+    {
+      name: "Gmail",
+      email: "personal@gmail.com",
+      img: "/gmail.svg",
+      password: "12345",
+      url: "https://google.com",
+    },
+    {
+      name: "Netflix",
+      email: "personal@gmail.com",
+      img: "/netflix.png",
+      password: "12345",
+      url: "https://netflix.com",
+    },
+    {
+      name: "Snapchat",
+      email: "personal@gmail.com",
+      img: "/snap.svg",
+      password: "12345",
+      url: "https://web.snapchat.com",
+    },
+    {
+      name: "TikTok",
+      email: "personal@gmail.com",
+      img: "/tiktok.svg",
+      password: "12345",
+      url: "https://tiktok.com",
+    },
   ]);
 
   const styles = {
