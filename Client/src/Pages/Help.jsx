@@ -18,7 +18,6 @@ import {
 
 const Help = () => {
   const [submit, setSubmit] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState(false);
 
@@ -52,7 +51,7 @@ const Help = () => {
 
   const submitForm = (values, { resetForm }) => {
     const { name, email, message } = values;
-    setIsSubmitting(true);
+    setLoading(true);
     emailjs
       .send(
         serviceId,
@@ -67,7 +66,7 @@ const Help = () => {
             setTimeout(() => {
               setSubmit(false);
             }, 3000);
-            setIsSubmitting(false);
+            setLoading(false);
             resetForm();
           }
         },
