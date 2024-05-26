@@ -159,10 +159,10 @@ const Sidenav = () => {
                 </span>
               </Link>
 
-              <Link to="/quiz">
+              <Link to="/settings">
                 <span
                   className={`cursor-pointer p-2 ${
-                    activeLink === "/quiz" ? "text-blue-600 " : ""
+                    activeLink === "/settings" ? "text-blue-600 " : ""
                   } hover:bg-slate-200/5 transition ease-in-out duration-300 flex items-center gap-4`}
                 >
                   <FontAwesomeIcon icon={faGear} />
@@ -262,10 +262,10 @@ const Sidenav = () => {
                 </span>
               </Link>
 
-              <Link to="/quiz">
+              <Link to="/settings">
                 <span
                   className={`cursor-pointer p-2 ${
-                    activeLink === "/quiz" ? "text-blue-600 " : ""
+                    activeLink === "/settings" ? "text-blue-600 " : ""
                   } hover:bg-slate-200/5 transition ease-in-out duration-300 flex items-center gap-4`}
                 >
                   <FontAwesomeIcon icon={faGear} />
