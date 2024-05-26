@@ -76,7 +76,7 @@ const Help = () => {
           setErr(error);
           setTimeout(() => {
             setErr(false);
-          }, 3000);
+          }, 6000);
         }
       );
   };
@@ -111,8 +111,8 @@ const Help = () => {
       <section className="lg:ml-[250px] lg:p-8 p-4 h-screen">
         <h1 className="font-bold text-3xl">Contact Us</h1>
         <div className="w-full lg:p-10 flex items-center justify-center relative flex-col">
-          <div className="w-full -mt-20 p-4">
-            <div className="flex lg:p-10 mt-12 pb-10 relative rounded-lg w-full">
+          <div className="w-full -mt-16">
+            <div className="flex lg:p-10 mt-12 relative rounded-lg w-full">
               <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
