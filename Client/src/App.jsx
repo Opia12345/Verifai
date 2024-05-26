@@ -6,6 +6,7 @@ import PasswordGenerator from "./Pages/PasswordGenerator";
 import Settings from "./Pages/Settings";
 import AccountSettings from "./Pages/AccountSettings";
 import PasswordReset from "./Pages/PasswordReset";
+import Help from "./Pages/Help";
 function App() {
   return (
     <>
@@ -16,6 +17,7 @@ function App() {
         <Route path="/settings" element={<Settings />} />
         <Route path="/accountSettings" element={<AccountSettings />} />
         <Route path="/passwordReset" element={<PasswordReset />} />
+        <Route path="/help" element={<Help />} />
       </Routes>
     </>
   );
