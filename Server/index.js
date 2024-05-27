@@ -14,6 +14,7 @@ const ResendOTP = require("./Controllers/ResendOTP");
 const OTPConfirmation = require("./Controllers/OTPConfirmation");
 const logout = require("./Controllers/Logout");
 const Delete = require("./Controllers/Delete");
+const App = require("./Controllers/App");
 require("dotenv").config();
 
 //CONFIGURATIONS
@@ -50,3 +51,6 @@ app.post("/passwordReset", PasswordReset.PasswordReset);
 app.post("/resend-verification/:userId", resendVerification.resendVerification);
 app.post("/resend-OTP/:userId", ResendOTP.ResendOTP);
 app.post("/OTPConfirmation", OTPConfirmation.OTPConfirmation);
+
+//APP ENDPOINTS
+app.post("/create-app", App.App);

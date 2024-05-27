@@ -35,17 +35,17 @@ const appSchema = new Schema(
       type: String,
       required: [true, "App name is required"],
     },
-    Email: {
+    appEmail: {
       type: String,
       required: [true, "Email Address is required"],
       unique: true,
     },
-    Password: {
+    appPassword: {
       type: String,
       required: [true, "Password is required"],
     },
-    URL: {
-      type: Number,
+    appUrl: {
+      type: String,
     },
   },
   { timestamps: true }
