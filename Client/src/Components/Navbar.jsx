@@ -149,16 +149,11 @@ const Navbar = () => {
           </h5>
         </span>
 
-        <span className="flex items-center gap-4">
-          <NavLink to="/dashboard">
-            <button className="flex cursor-pointer items-center hover:bg-transparent text-black py-2 px-6">
-              Login
-            </button>
-          </NavLink>
+        <NavLink to="/register">
           <button className="flex cursor-pointer items-center hover:bg-transparent text-white hover:text-black border transition-all ease-in duration-300 bg-black py-2 px-6 rounded-3xl">
             SignUp
           </button>
-        </span>
+        </NavLink>
 
         <button
           className="md:hidden block cursor-pointer"
