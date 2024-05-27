@@ -22,6 +22,7 @@ import * as Yup from "yup";
 const Dashboard = () => {
   const [search, setSearch] = useState("");
   const [popup, setPopup] = useState(false);
+  const [appPasswordStrength, setAppPasswordStrength] = useState("");
   const [add, setAdd] = useState(false);
   const [password, setPassword] = useState(false);
   const [copy, setCopy] = useState(false);
@@ -93,22 +94,44 @@ const Dashboard = () => {
       "transform -translate-x-full opacity-0 transition-all duration-500 ease-in-out",
   };
 
+  const evaluatePasswordStrength = (password) => {
+    if (!password) {
+      return "";
+    }
+
+    const strongPassword =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/;
+    const superStrongPassword =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{10,}$/;
+
+    if (superStrongPassword.test(password)) {
+      return "Super Strong";
+    } else if (strongPassword.test(password)) {
+      return "Strong";
+    } else {
+      return "Weak";
+    }
+  };
+
+  const passwordStrength = evaluatePasswordStrength(
+    selectedApp?.password || ""
+  );
+
   const handleChange = (e) => {
     setSearch(e.target.value);
   };
 
-  const handleAddApp = (e) => {
-    e.preventDefault();
-    const { name, email, password, url } = e.target.elements;
+  const handleAddApp = (values, { resetForm }) => {
     const newApp = {
-      name: name.value,
-      email: email.value,
+      name: values.appName,
+      email: values.appEmail,
       img: "/default.png",
-      password: password.value,
-      url: url.value,
+      password: values.appPassword,
+      url: values.appUrl,
     };
     setApps([...apps, newApp]);
     setAdd(false);
+    resetForm();
   };
 
   const handleAppClick = (app) => {
@@ -259,6 +282,17 @@ const Dashboard = () => {
                     onClick={() => handleCopy(selectedApp.password)}
                   />
                 </span>
+                <span
+                  className={`text-xs ${
+                    passwordStrength === "Super Strong"
+                      ? "text-green-500"
+                      : passwordStrength === "Strong"
+                      ? "text-yellow-500"
+                      : "text-red-500"
+                  }`}
+                >
+                  {passwordStrength}
+                </span>
 
                 <label>URL</label>
                 <span className="flex items-center bg-slate-200/20 w-full gap-2 rounded-md p-2">
@@ -311,63 +345,83 @@ const Dashboard = () => {
               validationSchema={validationSchema}
               onSubmit={handleAddApp}
             >
-              <Form className="flex flex-col gap-4 items-start mt-6">
-                <label>Application Name</label>
-                <Field
-                  name="appName"
-                  type="text"
-                  placeholder="Application Name"
-                  className="bg-slate-200/20 text-white font-light text-xs w-full outline-none rounded-md p-2"
-                />
-                <ErrorMessage
-                  name="appName"
-                  component="div"
-                  className="text-red-500 text-xs"
-                />
-                <label>Email Address</label>
-                <Field
-                  name="appEmail"
-                  type="email"
-                  placeholder="Email Address"
-                  className="bg-slate-200/20 text-white font-light text-xs w-full outline-none rounded-md p-2"
-                />
-                <ErrorMessage
-                  name="appEmail"
-                  component="div"
-                  className="text-red-500 text-xs"
-                />
-                <label>Password</label>
-                <Field
-                  name="appPassword"
-                  type="password"
-                  placeholder="Password"
-                  className="bg-slate-200/20 text-white font-light text-xs w-full outline-none rounded-md p-2"
-                />
-                <ErrorMessage
-                  name="appPassword"
-                  component="div"
-                  className="text-red-500 text-xs"
-                />
-                <label>URL</label>
-                <Field
-                  name="appUrl"
-                  type="text"
-                  placeholder="URL"
-                  className="bg-slate-200/20 text-white font-light text-xs w-full outline-none rounded-md p-2"
-                />
-                <ErrorMessage
-                  name="appUrl"
-                  component="div"
-                  className="text-red-500 text-xs"
-                />
-                <button
-                  type="submit"
-                  className="flex items-center gap-2 border rounded-md py-2 px-6 hover:bg-slate-200/10 duration-300 ease-in-out transition-all"
-                >
-                  <FontAwesomeIcon icon={faArrowRight} className="" />
-                  <h5 className="text-xs">Add</h5>
-                </button>
-              </Form>
+              {({ values, setFieldValue }) => (
+                <Form className="flex flex-col gap-4 items-start mt-6">
+                  <label>Application Name</label>
+                  <Field
+                    name="appName"
+                    type="text"
+                    placeholder="Application Name"
+                    className="bg-slate-200/20 text-white font-light text-xs w-full outline-none rounded-md p-2"
+                  />
+                  <ErrorMessage
+                    name="appName"
+                    component="div"
+                    className="text-red-500 text-xs"
+                  />
+                  <label>Email Address</label>
+                  <Field
+                    name="appEmail"
+                    type="email"
+                    placeholder="Email Address"
+                    className="bg-slate-200/20 text-white font-light text-xs w-full outline-none rounded-md p-2"
+                  />
+                  <ErrorMessage
+                    name="appEmail"
+                    component="div"
+                    className="text-red-500 text-xs"
+                  />
+                  <label>Password</label>
+                  <span className="flex items-center bg-slate-200/20 w-full gap-2 rounded-md p-2">
+                    <Field
+                      type="password"
+                      name="appPassword"
+                      className="bg-transparent text-white font-light text-xs w-full outline-none"
+                      onChange={(e) => {
+                        setFieldValue("appPassword", e.target.value);
+                        setAppPasswordStrength(
+                          evaluatePasswordStrength(e.target.value)
+                        );
+                      }}
+                    />
+                  </span>
+                  <span
+                    className={`text-xs ${
+                      appPasswordStrength === "Super Strong"
+                        ? "text-green-500"
+                        : appPasswordStrength === "Strong"
+                        ? "text-yellow-500"
+                        : "text-red-500"
+                    }`}
+                  >
+                    {appPasswordStrength}
+                  </span>
+                  <ErrorMessage
+                    name="appPassword"
+                    component="div"
+                    className="text-red-500 text-xs"
+                  />
+                  <label>URL</label>
+                  <Field
+                    name="appUrl"
+                    type="text"
+                    placeholder="URL"
+                    className="bg-slate-200/20 text-white font-light text-xs w-full outline-none rounded-md p-2"
+                  />
+                  <ErrorMessage
+                    name="appUrl"
+                    component="div"
+                    className="text-red-500 text-xs"
+                  />
+                  <button
+                    type="submit"
+                    className="flex items-center gap-2 border rounded-md py-2 px-6 hover:bg-slate-200/10 duration-300 ease-in-out transition-all"
+                  >
+                    <FontAwesomeIcon icon={faArrowRight} className="" />
+                    <h5 className="text-xs">Add</h5>
+                  </button>
+                </Form>
+              )}
             </Formik>
           </div>
         </div>
