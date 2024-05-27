@@ -22,7 +22,7 @@ import * as Yup from "yup";
 const Dashboard = () => {
   const [search, setSearch] = useState("");
   const [popup, setPopup] = useState(false);
-  const [appPasswordStrength, setAppPasswordStrength] = useState("");
+  const [appPasswordStrength, setAppPasswordStrength] = useState(null);
   const [add, setAdd] = useState(false);
   const [password, setPassword] = useState(false);
   const [copy, setCopy] = useState(false);
@@ -374,8 +374,9 @@ const Dashboard = () => {
                   <label>Password</label>
                   <span className="flex items-center bg-slate-200/20 w-full gap-2 rounded-md p-2">
                     <Field
-                      type="password"
+                      type={password ? "text" : "password"}
                       name="appPassword"
+                      placeholder="Password"
                       className="bg-transparent text-white font-light text-xs w-full outline-none"
                       onChange={(e) => {
                         setFieldValue("appPassword", e.target.value);
@@ -383,6 +384,10 @@ const Dashboard = () => {
                           evaluatePasswordStrength(e.target.value)
                         );
                       }}
+                    />
+                    <FontAwesomeIcon
+                      icon={password ? faEye : faEyeSlash}
+                      onClick={() => setPassword(!password)}
                     />
                   </span>
                   <span

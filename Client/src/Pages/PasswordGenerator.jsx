@@ -7,34 +7,30 @@ import {
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import { CSSTransition } from "react-transition-group";
-import { faCopy, faCheckCircle } from "@fortawesome/free-regular-svg-icons";
+import { faCopy } from "@fortawesome/free-regular-svg-icons";
+import { faCheckCircle } from "@fortawesome/free-regular-svg-icons";
 
-const generatePassword = (length = 12) => {
+const generatePassword = (
+  length,
+  includeUppercase,
+  includeNumbers,
+  includeSymbols
+) => {
   const lowercaseChars = "abcdefghijklmnopqrstuvwxyz";
   const uppercaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   const numberChars = "0123456789";
   const symbolChars = "!@#$%^&*()-_+=~`[]{}|;:,.<>?";
 
-  const allChars = lowercaseChars + uppercaseChars + numberChars + symbolChars;
+  let chars = lowercaseChars;
+  if (includeUppercase) chars += uppercaseChars;
+  if (includeNumbers) chars += numberChars;
+  if (includeSymbols) chars += symbolChars;
 
-  // Ensure inclusion of at least one character from each required set
   let password = "";
-  password += lowercaseChars[Math.floor(Math.random() * lowercaseChars.length)];
-  password += uppercaseChars[Math.floor(Math.random() * uppercaseChars.length)];
-  password += numberChars[Math.floor(Math.random() * numberChars.length)];
-  password += symbolChars[Math.floor(Math.random() * symbolChars.length)];
-
-  // Generate the remaining characters randomly from all character sets
-  for (let i = 4; i < length; i++) {
-    const randomIndex = Math.floor(Math.random() * allChars.length);
-    password += allChars[randomIndex];
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * chars.length);
+    password += chars[randomIndex];
   }
-
-  // Shuffle the password to ensure randomness
-  password = password
-    .split("")
-    .sort(() => 0.5 - Math.random())
-    .join("");
 
   return password;
 };
@@ -43,9 +39,18 @@ const PasswordGenerator = () => {
   const [password, setPassword] = useState("");
   const [copy, setCopy] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [length, setLength] = useState(8);
+  const [includeUppercase, setIncludeUppercase] = useState(true);
+  const [includeNumbers, setIncludeNumbers] = useState(true);
+  const [includeSymbols, setIncludeSymbols] = useState(true);
 
   const handleGeneratePassword = () => {
-    const newPassword = generatePassword();
+    const newPassword = generatePassword(
+      length,
+      includeUppercase,
+      includeNumbers,
+      includeSymbols
+    );
     setPassword(newPassword);
     setShowPassword(true);
   };
@@ -71,6 +76,48 @@ const PasswordGenerator = () => {
       <Sidenav />
       <div className="lg:ml-[250px] lg:p-8 p-4 h-screen">
         <h1 className="font-bold text-3xl">Password Generator</h1>
+        <div className="flex flex-col gap-2 mt-12">
+          <span className="flex items-center bg-slate-200/20 md:w-1/2 w-full gap-2 g:p-8 rounded-md p-2 mt-4 lg:ml-[250px]">
+            <FontAwesomeIcon icon={faLock} />
+            <input
+              placeholder="Password Length"
+              className="bg-transparent text-white font-light text-xs w-full outline-none"
+              type="number"
+              id="length"
+              min="4"
+              max="64"
+              value={length}
+              onChange={(e) => setLength(parseInt(e.target.value))}
+            />
+          </span>
+        </div>
+
+        <div className="grid lg:grid-cols-3 md:w-1/2 w-full gap-2 g:p-8 rounded-md p-2 mt-4 lg:ml-[250px]">
+          <label>
+            <input
+              type="checkbox"
+              checked={includeUppercase}
+              onChange={(e) => setIncludeUppercase(e.target.checked)}
+            />{" "}
+            Include Uppercase Characters
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              checked={includeNumbers}
+              onChange={(e) => setIncludeNumbers(e.target.checked)}
+            />{" "}
+            Include Numbers
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              checked={includeSymbols}
+              onChange={(e) => setIncludeSymbols(e.target.checked)}
+            />{" "}
+            Include Symbols
+          </label>
+        </div>
         <div className="flex items-center justify-center mt-4">
           <button
             onClick={handleGeneratePassword}
@@ -109,7 +156,7 @@ const PasswordGenerator = () => {
         <div className="fixed top-10 lg:right-[40%] z-50 bg-slate-200/5 backdrop-blur-lg p-4 rounded-md flex items-center justify-center">
           <h5 className="flex items-center gap-4 text-center font-bold">
             <FontAwesomeIcon className="text-green-500" icon={faCheckCircle} />
-            <span>Copied to Clipboard</span>
+            <h5>Copied to Clipboard</h5>
           </h5>
         </div>
       </CSSTransition>
