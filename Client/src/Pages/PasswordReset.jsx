@@ -126,11 +126,6 @@ const PasswordReset = () => {
               action=""
               className="mt-4 p-4 space-y-8 flex flex-col w-2/3 justify-center"
             >
-              <ErrorMessage
-                name="username"
-                component="div"
-                className="text-red-500 flex items-center md:w-1/2 w-full gap-2 g:p-8 rounded-md p-2 mt-4 lg:ml-[250px]"
-              />
               <span className="flex items-center bg-slate-200/20 md:w-1/2 w-full gap-2 g:p-8 rounded-md p-2 mt-4 lg:ml-[250px]">
                 <FontAwesomeIcon icon={faUser} />
                 <Field
@@ -140,6 +135,11 @@ const PasswordReset = () => {
                   className="bg-transparent text-white font-light text-xs w-full outline-none"
                 />
               </span>
+              <ErrorMessage
+                name="username"
+                component="div"
+                className="text-red-500 text-xs flex items-center lg:ml-[250px]"
+              />
               <button
                 type="submit"
                 className="bg-blue-500 transition duration-300 justify-center ease-in-out text-white flex items-center bg-slate-200/20 md:w-1/2 w-full gap-2 g:p-8 p-2 mt-4 lg:ml-[250px] hover:bg-blue-700 cursor-pointer rounded-lg py-2"
@@ -166,11 +166,6 @@ const PasswordReset = () => {
               action=""
               className="mt-4 p-4 space-y-8 flex flex-col w-2/3 justify-center"
             >
-              <ErrorMessage
-                name="email"
-                component="div"
-                className="text-red-500 flex items-center md:w-1/2 w-full gap-2 g:p-8 rounded-md p-2 mt-4 lg:ml-[250px]"
-              />
               <span className="flex items-center bg-slate-200/20 md:w-1/2 w-full gap-2 g:p-8 rounded-md p-2 mt-4 lg:ml-[250px]">
                 <FontAwesomeIcon icon={faEnvelope} />
                 <Field
@@ -180,6 +175,11 @@ const PasswordReset = () => {
                   className="bg-transparent text-white font-light text-xs w-full outline-none"
                 />
               </span>
+              <ErrorMessage
+                name="email"
+                component="div"
+                className="text-red-500 text-xs flex items-center lg:ml-[250px]"
+              />
 
               <button
                 type="submit"
@@ -207,11 +207,6 @@ const PasswordReset = () => {
               action=""
               className="mt-4 p-4 space-y-8 flex flex-col w-2/3 justify-center"
             >
-              <ErrorMessage
-                name="password"
-                component="div"
-                className="text-red-500 flex items-center md:w-1/2 w-full gap-2 g:p-8 rounded-md p-2 mt-4 lg:ml-[250px]"
-              />
               <span className="flex items-center bg-slate-200/20 md:w-1/2 w-full gap-2 g:p-8 rounded-md p-2 mt-4 lg:ml-[250px]">
                 <FontAwesomeIcon icon={faLockOpen} />
                 <Field
@@ -226,12 +221,12 @@ const PasswordReset = () => {
                   className="cursor-pointer text-white"
                 />
               </span>
-
               <ErrorMessage
-                name="confirmPassword"
+                name="password"
                 component="div"
-                className="text-red-500 flex items-center md:w-1/2 w-full gap-2 g:p-8 rounded-md p-2 mt-4 lg:ml-[250px]"
+                className="text-red-500 text-xs flex items-center lg:ml-[250px]"
               />
+
               <span className="flex items-center bg-slate-200/20 md:w-1/2 w-full gap-2 g:p-8 rounded-md p-2 mt-4 lg:ml-[250px]">
                 <FontAwesomeIcon icon={faLock} />
                 <Field
@@ -246,6 +241,11 @@ const PasswordReset = () => {
                   className="cursor-pointer text-white"
                 />
               </span>
+              <ErrorMessage
+                name="confirmPassword"
+                component="div"
+                className="text-red-500 text-xs flex items-center lg:ml-[250px]"
+              />
 
               <button
                 type="submit"

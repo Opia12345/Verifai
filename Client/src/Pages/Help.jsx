@@ -117,9 +117,9 @@ const Help = () => {
                 validationSchema={validationSchema}
                 onSubmit={submitForm}
               >
-                <Form className="mt-4 w-full flex flex-col" id="emailForm">
-                  <span className="grid lg:grid-cols-2 grid-cols-1 gap-4">
-                    <span className="flex items-center bg-slate-200/20 gap-2 rounded-md p-2 mt-4">
+                <Form className="mt-8 w-full flex flex-col" id="emailForm">
+                  <div className="grid lg:grid-cols-2 grid-cols-1 gap-4">
+                    <span className="flex items-center bg-slate-200/20 gap-2 rounded-md p-2">
                       <FontAwesomeIcon icon={faUser} />
                       <Field
                         type="text"
@@ -131,10 +131,10 @@ const Help = () => {
                     <ErrorMessage
                       name="name"
                       component="div"
-                      className="text-red-500"
+                      className="text-red-500 text-xs flex items-center"
                     />
 
-                    <span className="flex items-center bg-slate-200/20 gap-2 rounded-md p-2 mt-4">
+                    <span className="flex items-center bg-slate-200/20 gap-2 rounded-md p-2">
                       <FontAwesomeIcon icon={faEnvelope} />
                       <Field
                         type="email"
@@ -146,9 +146,9 @@ const Help = () => {
                     <ErrorMessage
                       name="email"
                       component="div"
-                      className="text-red-500"
+                      className="text-red-500 text-xs flex items-center"
                     />
-                  </span>
+                  </div>
 
                   <span className="flex items-center bg-slate-200/20 gap-2 rounded-md p-2 mt-4">
                     <Field
@@ -163,7 +163,7 @@ const Help = () => {
                   <ErrorMessage
                     name="message"
                     component="div"
-                    className="text-red-500"
+                    className="text-red-500 text-xs flex items-center"
                   />
                   <button
                     type="submit"

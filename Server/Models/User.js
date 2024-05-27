@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+//USER SCHEMA
 const userSchema = new Schema(
   {
     LastName: {
@@ -27,6 +28,30 @@ const userSchema = new Schema(
   { timestamps: true }
 );
 
-const User = mongoose.model("UserRegister", userSchema);
+//APP SCHEMA
+const appSchema = new Schema(
+  {
+    appName: {
+      type: String,
+      required: [true, "App name is required"],
+    },
+    Email: {
+      type: String,
+      required: [true, "Email Address is required"],
+      unique: true,
+    },
+    Password: {
+      type: String,
+      required: [true, "Password is required"],
+    },
+    URL: {
+      type: Number,
+    },
+  },
+  { timestamps: true }
+);
 
-module.exports = User;
+const User = mongoose.model("UserRegister", userSchema);
+const App = mongoose.model("App", appSchema);
+
+module.exports = { User, App };

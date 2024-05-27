@@ -16,6 +16,8 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { CSSTransition } from "react-transition-group";
 import { faCheckCircle } from "@fortawesome/free-regular-svg-icons";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
 
 const Dashboard = () => {
   const [search, setSearch] = useState("");
@@ -139,6 +141,20 @@ const Dashboard = () => {
     }, 3000);
   };
 
+  const initialValues = {
+    appName: "",
+    appEmail: "",
+    appPassword: "",
+    appUrl: "",
+  };
+
+  const validationSchema = Yup.object().shape({
+    appName: Yup.string().required("App Name is required"),
+    appEmail: Yup.string().required("Email Address is required"),
+    appPassword: Yup.string().required("Password is required"),
+    appUrl: Yup.string(),
+  });
+
   return (
     <>
       <Sidenav />
@@ -200,7 +216,7 @@ const Dashboard = () => {
             onClick={() => setPopup(false)}
           />
           {selectedApp && (
-            <div className="bg-slate-900 p-12 rounded-md lg:w-[60%]">
+            <div className="bg-slate-900 p-12 rounded-md w-[90%] lg:w-[60%]">
               <div className="flex justify-center items-center flex-col">
                 <img src={selectedApp.img} className="w-[40px]" />
                 <div>
@@ -288,48 +304,71 @@ const Dashboard = () => {
             className="fixed top-10 right-10 text-xl cursor-pointer"
             onClick={() => setAdd(false)}
           />
-          <div className="bg-slate-900 p-12 rounded-md lg:w-[60%]">
+          <div className="bg-slate-900 p-12 rounded-md w-[90%] lg:w-[60%]">
             <h5 className="text-xl text-center font-bold">Add Application</h5>
-            <form
-              className="flex flex-col gap-4 items-start mt-6"
+            <Formik
+              initialValues={initialValues}
+              validationSchema={validationSchema}
               onSubmit={handleAddApp}
             >
-              <label>Application Name</label>
-              <input
-                name="name"
-                type="text"
-                placeholder="Application Name"
-                className="bg-slate-200/20 text-white font-light text-xs w-full outline-none rounded-md p-2"
-              />
-              <label>Email Address</label>
-              <input
-                name="email"
-                type="email"
-                placeholder="Email Address"
-                className="bg-slate-200/20 text-white font-light text-xs w-full outline-none rounded-md p-2"
-              />
-              <label>Password</label>
-              <input
-                name="password"
-                type="password"
-                placeholder="Password"
-                className="bg-slate-200/20 text-white font-light text-xs w-full outline-none rounded-md p-2"
-              />
-              <label>URL</label>
-              <input
-                name="url"
-                type="text"
-                placeholder="URL"
-                className="bg-slate-200/20 text-white font-light text-xs w-full outline-none rounded-md p-2"
-              />
-              <button
-                type="submit"
-                className="flex items-center gap-2 border rounded-md py-2 px-6 hover:bg-slate-200/10 duration-300 ease-in-out transition-all"
-              >
-                <FontAwesomeIcon icon={faArrowRight} className="" />
-                <h5 className="text-xs">Add</h5>
-              </button>
-            </form>
+              <Form className="flex flex-col gap-4 items-start mt-6">
+                <label>Application Name</label>
+                <Field
+                  name="appName"
+                  type="text"
+                  placeholder="Application Name"
+                  className="bg-slate-200/20 text-white font-light text-xs w-full outline-none rounded-md p-2"
+                />
+                <ErrorMessage
+                  name="appName"
+                  component="div"
+                  className="text-red-500 text-xs"
+                />
+                <label>Email Address</label>
+                <Field
+                  name="appEmail"
+                  type="email"
+                  placeholder="Email Address"
+                  className="bg-slate-200/20 text-white font-light text-xs w-full outline-none rounded-md p-2"
+                />
+                <ErrorMessage
+                  name="appEmail"
+                  component="div"
+                  className="text-red-500 text-xs"
+                />
+                <label>Password</label>
+                <Field
+                  name="appPassword"
+                  type="password"
+                  placeholder="Password"
+                  className="bg-slate-200/20 text-white font-light text-xs w-full outline-none rounded-md p-2"
+                />
+                <ErrorMessage
+                  name="appPassword"
+                  component="div"
+                  className="text-red-500 text-xs"
+                />
+                <label>URL</label>
+                <Field
+                  name="appUrl"
+                  type="text"
+                  placeholder="URL"
+                  className="bg-slate-200/20 text-white font-light text-xs w-full outline-none rounded-md p-2"
+                />
+                <ErrorMessage
+                  name="appUrl"
+                  component="div"
+                  className="text-red-500 text-xs"
+                />
+                <button
+                  type="submit"
+                  className="flex items-center gap-2 border rounded-md py-2 px-6 hover:bg-slate-200/10 duration-300 ease-in-out transition-all"
+                >
+                  <FontAwesomeIcon icon={faArrowRight} className="" />
+                  <h5 className="text-xs">Add</h5>
+                </button>
+              </Form>
+            </Formik>
           </div>
         </div>
       </CSSTransition>
