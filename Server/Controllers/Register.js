@@ -2,7 +2,7 @@ const nodemailer = require("nodemailer");
 const saltRounds = 15;
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const User = require("../Models/User");
+const { User } = require("../Models/User");
 const yup = require("yup");
 require("dotenv").config();
 
@@ -49,8 +49,7 @@ exports.Register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(Password, saltRounds);
 
     const newUser = new User({
-      LastName,
-      FirstName,
+      userName,
       Email,
       Password: hashedPassword,
     });
@@ -85,7 +84,7 @@ exports.Register = async (req, res) => {
       </tr>
       <tr>
           <td style="padding: 40px;">
-                <h3 style="margin-top: 0;">Dear ${FirstName},</h3>
+                <h3 style="margin-top: 0;">Dear ${userName},</h3>
               <p>Welcome to The Vault! We are thrilled to have you join our community. At The Vault, your security is our top priority. To ensure that your account remains secure, we offer a robust password storage feature designed to protect your credentials.</p>
               <p>Before you can start using all the features, please verify your email address by clicking the link below:</p>
               <p style="text-align: center;">

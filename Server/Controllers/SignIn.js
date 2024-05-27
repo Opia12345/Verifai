@@ -1,4 +1,4 @@
-const User = require("../Models/User");
+const { User } = require("../Models/User");
 const bcrypt = require("bcrypt");
 const yup = require("yup");
 const jwt = require("jsonwebtoken");
@@ -52,7 +52,7 @@ exports.signIn = async (req, res) => {
       message: "Sign in successful",
       userId,
       token,
-      firstName: existingUser.FirstName,
+      userName: existingUser.userName,
       userEmail: existingUser.Email,
     };
     res.status(200).json(response);
