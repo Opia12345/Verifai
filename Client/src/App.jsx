@@ -8,12 +8,14 @@ import AccountSettings from "./Pages/AccountSettings";
 import PasswordReset from "./Pages/PasswordReset";
 import Help from "./Pages/Help";
 import Register from "./Pages/Register";
+import SignIn from "./Pages/SignIn";
 function App() {
   return (
     <>
       <Routes>
         <Route index path="/" element={<Home />} />
         <Route index path="/register" element={<Register />} />
+        <Route index path="/signin" element={<SignIn />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/generator" element={<PasswordGenerator />} />
         <Route path="/settings" element={<Settings />} />

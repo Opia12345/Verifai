@@ -1,11 +1,6 @@
 import React, { useState } from "react";
 import { Formik, ErrorMessage, Field, Form } from "formik";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faFacebook,
-  faGithub,
-  faGoogle,
-} from "@fortawesome/free-brands-svg-icons";
 import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 import * as yup from "yup";
 import { Link } from "react-router-dom";
@@ -13,10 +8,9 @@ import {
   faArrowRight,
   faEnvelope,
   faLock,
-  faUser,
 } from "@fortawesome/free-solid-svg-icons";
 
-const Register = () => {
+const SignIn = () => {
   //STATES
   const [showPassword, setShowPassword] = useState(false);
   const [successSignup, setSuccessSignup] = useState(false);
@@ -24,13 +18,11 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
 
   const initialValues = {
-    userName: "",
     Email: "",
     Password: "",
   };
 
   const Validation = yup.object().shape({
-    userName: yup.string().required("User Name is required"),
     Email: yup
       .string()
       .email("Please use a valid email address")
@@ -39,10 +31,6 @@ const Register = () => {
       .string()
       .min(8, "Password must be at least 8 characters")
       .required("Password is required"),
-    confirmPassword: yup
-      .string()
-      .oneOf([yup.ref("password"), null], "Passwords must match")
-      .required("Please confirm your password"),
   });
 
   const submitForm = (values, { resetForm }) => {
@@ -83,25 +71,10 @@ const Register = () => {
                 className="flex flex-col text-center p-8 rounded-lg justify-center gap-4 frm"
                 id="emailForm"
               >
-                <h1 className="text-2xl font-bold">Setup Your Vault Account</h1>
-                <h5>
-                  Enter your details to create a secure account and keep your
-                  credentials safe. Let's get started!
-                </h5>
-                <span className="flex items-center bg-slate-200/20 gap-2 rounded-md p-2 mt-4">
-                  <FontAwesomeIcon icon={faUser} />
-                  <Field
-                    type="text"
-                    name="userName"
-                    placeholder="Username"
-                    className="bg-transparent text-white font-light text-xs w-full outline-none"
-                  />
-                </span>
-                <ErrorMessage
-                  name="userName"
-                  component="div"
-                  className="text-red-500 text-xs flex items-center "
-                />
+                <h1 className="text-2xl font-bold">
+                  Log Into Your Vault Account
+                </h1>
+                <h5>Easily pick up from where you left off!</h5>
                 <span className="flex items-center bg-slate-200/20 gap-2 rounded-md p-2 mt-4">
                   <FontAwesomeIcon icon={faEnvelope} />
                   <Field
@@ -136,25 +109,6 @@ const Register = () => {
                   className="text-red-500 text-xs flex items-center "
                 />
 
-                <span className="flex items-center bg-slate-200/20 gap-2 rounded-md p-2 mt-4">
-                  <FontAwesomeIcon icon={faLock} />
-                  <Field
-                    type={showPassword ? "text" : "password"}
-                    name="confirmPassword"
-                    placeholder="Confirm Password"
-                    className="bg-transparent text-white font-light text-xs w-full outline-none"
-                  />
-                  <FontAwesomeIcon
-                    icon={showPassword ? faEye : faEyeSlash}
-                    onClick={() => setShowPassword(!showPassword)}
-                  />
-                </span>
-                <ErrorMessage
-                  name="confirmPassword"
-                  component="div"
-                  className="text-red-500 text-xs flex items-center"
-                />
-
                 {loading ? (
                   <button
                     disabled="true"
@@ -168,16 +122,19 @@ const Register = () => {
                 ) : (
                   <button type="submit" className="border rounded-md py-2">
                     <div>
-                      Register &nbsp;
+                      Login &nbsp;
                       <FontAwesomeIcon icon={faArrowRight} />
                     </div>
                   </button>
                 )}
 
                 <h4 className="flex text-center items-center mt-4 text-slate-400">
-                  Already have an account?&nbsp;
-                  <Link to='/signin' className="underline hover:text-white duration-300 ease-in">
-                    Login.
+                  Don't have an account?&nbsp;
+                  <Link
+                    to="/register"
+                    className="underline hover:text-white duration-300 ease-in"
+                  >
+                    Register.
                   </Link>
                 </h4>
               </Form>
@@ -189,4 +146,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default SignIn;

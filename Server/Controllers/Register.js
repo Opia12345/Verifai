@@ -16,8 +16,7 @@ const transporter = nodemailer.createTransport({
 });
 
 const Validation = yup.object().shape({
-  LastName: yup.string().required("Last Name is required"),
-  FirstName: yup.string().required("First Name is required"),
+  userName: yup.string().required("User Name is required"),
   Email: yup
     .string()
     .email("Please use a valid email address")
@@ -29,12 +28,12 @@ const Validation = yup.object().shape({
 });
 
 exports.Register = async (req, res) => {
-  const { LastName, FirstName, Email, Password } = req.body;
+  const { userName, Email, Password } = req.body;
 
   try {
     const validationSchema = Validation;
     await validationSchema.validate(
-      { LastName, FirstName, Email, Password },
+      { userName, Email, Password },
       { abortEarly: false }
     );
 
