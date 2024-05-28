@@ -1,29 +1,23 @@
-import { faKeybase, faPaypal } from "@fortawesome/free-brands-svg-icons";
-import { faQuestionCircle, faUser } from "@fortawesome/free-regular-svg-icons";
 import {
   faBarsStaggered,
-  faChevronDown,
-  faChevronUp,
   faCircleQuestion,
   faGear,
   faKey,
   faLock,
-  faQuestion,
-  faSign,
-  faSignOut,
   faTimes,
-  faTimesCircle,
   faUserAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState, useEffect } from "react";
 import { CSSTransition } from "react-transition-group";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
+import { useUserContext } from "../Context/UserContext";
 
 const Sidenav = () => {
   const [activeLink, setActiveLink] = useState(null);
   const [mobile, setMobile] = useState(false);
   const [mobileNav, setMobileNav] = useState(false);
+  const { username } = useUserContext();
 
   const handleLinkClick = (link) => {
     setActiveLink(link);
@@ -113,9 +107,15 @@ const Sidenav = () => {
                   <h5>Help</h5>
                 </span>
               </Link>
-              <span className=" hover:bg-slate-200/5 cursor-pointer transition ease-in-out duration-300 flex p-2 border rounded-md items-center gap-4">
-                <FontAwesomeIcon icon={faUserAlt} className="text-lg" />
-                <h5>UserName</h5>
+              <span className="bg-slate-200/20 ease-in-out duration-300 flex p-2 justify-between rounded-md items-center gap-2">
+                <div className="flex items-center gap-4">
+                  <FontAwesomeIcon
+                    icon={faUserAlt}
+                    className="text-lg text-blue-600"
+                  />
+                  <h5>{username}</h5>
+                </div>
+                <div className="h-2 w-2 bg-green-500 rounded-full"></div>
               </span>
             </div>
           </nav>
@@ -194,9 +194,15 @@ const Sidenav = () => {
                   <h5>Help</h5>
                 </span>
               </Link>
-              <span className=" hover:bg-slate-200/5 transition cursor-pointer ease-in-out duration-300 flex p-2 border rounded-md items-center gap-4">
-                <FontAwesomeIcon icon={faUserAlt} className="text-lg" />
-                <h5>UserName</h5>
+              <span className="bg-slate-200/20 ease-in-out duration-300 flex p-2 justify-between rounded-md items-center gap-2">
+                <div className="flex items-center gap-4">
+                  <FontAwesomeIcon
+                    icon={faUserAlt}
+                    className="text-lg text-blue-600"
+                  />
+                  <h5>{username}</h5>
+                </div>
+                <div className="h-2 w-2 bg-green-500 rounded-full"></div>
               </span>
             </div>
           </nav>

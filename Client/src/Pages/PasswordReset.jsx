@@ -17,41 +17,48 @@ import {
   faLockOpen,
 } from "@fortawesome/free-solid-svg-icons";
 import { CSSTransition } from "react-transition-group";
+import { useUserContext } from "../Context/UserContext";
+import { getApiUrl } from "../config";
+import axios from "axios";
 
 const PasswordReset = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const [success, setSuccess] = useState(false);
+  const [success, setSuccess] = useState(null);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const { userEmail, username, updateUserEmail, updateUsername } =
+    useUserContext();
+  const userId = JSON.parse(localStorage.getItem("user"))?.userId;
+  const apiUrl = getApiUrl(process.env.NODE_ENV);
 
   const initialValues = {
-    username: "",
+    userName: "",
   };
 
   const initialValues2 = {
-    email: "",
+    Email: "",
   };
 
   const initialValues3 = {
-    password: "",
+    Password: "",
   };
 
-  const validationSchema = Yup.object().shape({
-    username: Yup.string().required("Username is required"),
+  const Validation = Yup.object().shape({
+    userName: Yup.string().required("User Name is required"),
   });
 
   const validationSchema2 = Yup.object().shape({
-    email: Yup.string()
+    Email: Yup.string()
       .email("Invalid email address")
       .required("Email is required"),
   });
 
   const validationSchema3 = Yup.object().shape({
-    password: Yup.string()
+    Password: Yup.string()
       .min(8, "Password must be at least 8 characters")
       .required("Password is required"),
     confirmPassword: Yup.string()
-      .oneOf([Yup.ref("password"), null], "Passwords must match")
+      .oneOf([Yup.ref("Password"), null], "Passwords must match")
       .required("Please confirm your password"),
   });
 
@@ -63,25 +70,69 @@ const PasswordReset = () => {
       "transform -translate-x-full opacity-0 transition-all duration-500 ease-in-out",
   };
 
-  const handleSubmit = (values) => {
+  const handleSubmit = (values, { resetForm }) => {
     setLoading(true);
-    // axios
-    //   .put(
-    //     `${apiUrl}/updateAccount`,
-    //     { values, userId },
-    //     { withCredentials: true }
-    //   )
-    //   .then((response) => {
-    //     setSuccess(true);
-    //     setTimeout(() => {
-    //       setSuccess(false);
-    //     }, 5000);
-    //     setLoading(false);
-    //   })
-    //   .catch((err) => {
-    //     setError(err.response.data.message);
-    //     setLoading(false);
-    //   });
+    axios
+      .patch(`${apiUrl}/username-update/${userId}`, values, { userId })
+      .then((response) => {
+        setSuccess(response.data.message);
+        updateUsername(response.data.userName);
+        setTimeout(() => {
+          setSuccess(false);
+        }, 3000);
+        setLoading(false);
+        resetForm();
+      })
+      .catch((err) => {
+        setError(err.response.data.message);
+        setTimeout(() => {
+          setError(false);
+        }, 5000);
+        setLoading(false);
+      });
+  };
+
+  const handleSubmit2 = (values, { resetForm }) => {
+    setLoading(true);
+    axios
+      .patch(`${apiUrl}/email-update/${userId}`, values, { userId })
+      .then((response) => {
+        setSuccess(response.data.message);
+        updateUserEmail(response.data.userEmail);
+        setTimeout(() => {
+          setSuccess(false);
+        }, 3000);
+        setLoading(false);
+        resetForm();
+      })
+      .catch((err) => {
+        setError(err.response.data.message);
+        setTimeout(() => {
+          setError(false);
+        }, 5000);
+        setLoading(false);
+      });
+  };
+
+  const handleSubmit3 = (values, { resetForm }) => {
+    setLoading(true);
+    axios
+      .patch(`${apiUrl}/password-update/${userId}`, values, { userId })
+      .then((response) => {
+        setSuccess(response.data.message);
+        setTimeout(() => {
+          setSuccess(false);
+        }, 3000);
+        setLoading(false);
+        resetForm();
+      })
+      .catch((err) => {
+        setError(err.response.data.message);
+        setTimeout(() => {
+          setError(false);
+        }, 5000);
+        setLoading(false);
+      });
   };
 
   const handleSwitch = () => {
@@ -99,7 +150,7 @@ const PasswordReset = () => {
         <div className="fixed top-10 lg:right-[40%] z-50 bg-slate-200/5 backdrop-blur-lg p-4 rounded-md flex items-center justify-center">
           <h5 className="flex items-center gap-4 text-center font-bold">
             <FontAwesomeIcon className="text-green-500" icon={faCheckCircle} />
-            <small>Your account details have been updated.</small>
+            <small>{success}.</small>
           </h5>
         </div>
       </CSSTransition>
@@ -119,7 +170,7 @@ const PasswordReset = () => {
         <div className="flex items-center flex-col mt-4">
           <Formik
             initialValues={initialValues}
-            validationSchema={validationSchema}
+            validationSchema={Validation}
             onSubmit={handleSubmit}
           >
             <Form
@@ -130,13 +181,13 @@ const PasswordReset = () => {
                 <FontAwesomeIcon icon={faUser} />
                 <Field
                   type="text"
-                  name="username"
-                  placeholder="Username"
+                  name="userName"
+                  placeholder={username}
                   className="bg-transparent text-white font-light text-xs w-full outline-none"
                 />
               </span>
               <ErrorMessage
-                name="username"
+                name="userName"
                 component="div"
                 className="text-red-500 text-xs flex items-center lg:ml-[250px]"
               />
@@ -160,7 +211,7 @@ const PasswordReset = () => {
           <Formik
             initialValues={initialValues2}
             validationSchema={validationSchema2}
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmit2}
           >
             <Form
               action=""
@@ -170,13 +221,13 @@ const PasswordReset = () => {
                 <FontAwesomeIcon icon={faEnvelope} />
                 <Field
                   type="email"
-                  name="email"
-                  placeholder="Email Address"
+                  name="Email"
+                  placeholder={userEmail}
                   className="bg-transparent text-white font-light text-xs w-full outline-none"
                 />
               </span>
               <ErrorMessage
-                name="email"
+                name="Email"
                 component="div"
                 className="text-red-500 text-xs flex items-center lg:ml-[250px]"
               />
@@ -201,7 +252,7 @@ const PasswordReset = () => {
           <Formik
             initialValues={initialValues3}
             validationSchema={validationSchema3}
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmit3}
           >
             <Form
               action=""
@@ -211,7 +262,7 @@ const PasswordReset = () => {
                 <FontAwesomeIcon icon={faLockOpen} />
                 <Field
                   type={passwordVisible ? "text" : "password"}
-                  name="password"
+                  name="Password"
                   placeholder="Password"
                   className="bg-transparent text-white font-light text-xs w-full outline-none"
                 />
@@ -222,7 +273,7 @@ const PasswordReset = () => {
                 />
               </span>
               <ErrorMessage
-                name="password"
+                name="Password"
                 component="div"
                 className="text-red-500 text-xs flex items-center lg:ml-[250px]"
               />
