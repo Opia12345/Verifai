@@ -56,9 +56,9 @@ function App() {
           element={<EmailConfirmation />}
         />
         <Route path="/emailConfirmed" element={<EmailConfirmed />} />
-        <Route path="/updatePassword" element={<UpdatePassword />} />
+        <Route path="/updatePassword/:userId" element={<UpdatePassword />} />
         <Route path="/passwordUpdated" element={<PasswordUpdated />} />
-        <Route path="/otpConfirmation" element={<Otp />} />
+        <Route path="/otpConfirmation/:userId" element={<Otp />} />
         <Route path="/forgotPassword" element={<ForgotPassword />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/generator" element={<PasswordGenerator />} />

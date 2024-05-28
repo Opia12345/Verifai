@@ -1,5 +1,5 @@
 const nodemailer = require("nodemailer");
-const User = require("../Models/User");
+const { User } = require("../Models/User");
 const yup = require("yup");
 require("dotenv").config();
 
@@ -48,7 +48,7 @@ exports.updateEmail = async (req, res) => {
         </tr>
         <tr>
         <td style="padding: 40px;">
-        <h3 style="margin-top: 0;">Hello ${user.FirstName} 👋.</h3>
+        <h3 style="margin-top: 0;">Hello ${user.userName} 👋.</h3>
         <p>Your Email Address has been successfully updated.</p>
         <p>If you did not request this change, please contact us immediately at <u>pascalanthony643@gmail.com</u></p>
         

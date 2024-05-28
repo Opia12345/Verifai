@@ -12,13 +12,16 @@ import {
 import { CSSTransition } from "react-transition-group";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
-import { faQuestion } from "@fortawesome/free-solid-svg-icons/faQuestion";
+import { getApiUrl } from "../config";
+import axios from "axios";
 
 const UpdatePassword = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [err, setErr] = useState(false);
   const navigate = useNavigate();
+  const apiUrl = getApiUrl(process.env.NODE_ENV);
+  const userId = JSON.parse(localStorage.getItem("user"))?.userId;
 
   const initialValues = {
     Password: "",
@@ -46,25 +49,23 @@ const UpdatePassword = () => {
 
   const submitForm = (values, { resetForm }) => {
     setIsSubmitting(true);
-    // axios
-    //   .patch(`${apiUrl}/update-password/${userId}`, values, {
-    //     withCredentials: true,
-    //   })
-    //   .then((response) => {
-    //     setErr(null);
-    //     setIsSubmitting(false);
-    //     navigate("/passwordUpdated");
-    //     resetForm();
-    //   })
-    //   .catch((err) => {
-    //     if (err.response) {
-    //       setErr(err.response.data.message);
-    //       setTimeout(() => {
-    //         setErr(false);
-    //       }, 3000);
-    //       setIsSubmitting(false);
-    //     }
-    //   });
+    axios
+      .patch(`${apiUrl}/password-update/${userId}`, values)
+      .then((response) => {
+        setErr(null);
+        setIsSubmitting(false);
+        navigate("/passwordUpdated");
+        resetForm();
+      })
+      .catch((err) => {
+        if (err.response) {
+          setErr(err.response.data.message);
+          setTimeout(() => {
+            setErr(false);
+          }, 3000);
+          setIsSubmitting(false);
+        }
+      });
   };
 
   return (
@@ -136,7 +137,7 @@ const UpdatePassword = () => {
 
             {isSubmitting ? (
               <button
-                disabled="true"
+                disabled={true}
                 type="submit"
                 className="border rounded-md py-2"
               >

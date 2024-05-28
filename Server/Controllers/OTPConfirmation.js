@@ -1,4 +1,4 @@
-const User = require("../Models/User");
+const { User } = require("../Models/User");
 const yup = require("yup");
 
 const Validation = yup.object().shape({

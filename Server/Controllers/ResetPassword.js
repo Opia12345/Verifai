@@ -1,5 +1,5 @@
 const nodemailer = require("nodemailer");
-const User = require("../Models/User");
+const { User } = require("../Models/User");
 const yup = require("yup");
 
 // NODEMAILER
@@ -48,7 +48,7 @@ exports.PasswordReset = async (req, res) => {
       </tr>
       <tr>
           <td style="padding: 40px;">
-              <h3 style="margin-top: 0;">Hello ${existingUser.FirstName} 👋,</h3>
+              <h3 style="margin-top: 0;">Hello ${existingUser.userName} 👋,</h3>
               <p>We received a request to reset your password. Please use the following OTP to reset your password. This OTP is valid for 3 minutes:</p>
               <h2 style="display: flex; align-items: center; justify-content: center; font-size: 44px;">${otp}</h2>
               <p>If you did not request a password reset, you can safely ignore this email.</p>

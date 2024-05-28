@@ -12,11 +12,15 @@ import {
 import { CSSTransition } from "react-transition-group";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import * as yup from "yup";
+import { getApiUrl } from "../config";
+import axios from "axios";
 
 const ForgotPassword = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [err, setErr] = useState(false);
   const navigate = useNavigate();
+  const apiUrl = getApiUrl(process.env.NODE_ENV);
+  const userId = JSON.parse(localStorage.getItem("user"))?.userId;
 
   const initialValues = {
     Email: "",
@@ -39,24 +43,23 @@ const ForgotPassword = () => {
 
   const submitForm = (values, { resetForm }) => {
     setIsSubmitting(true);
-    // axios
-    //   .post(`${apiUrl}/passwordReset`, values, { withCredentials: true })
-    //   .then((response) => {
-    //     setErr(null);
-    //     localStorage.setItem("user", JSON.stringify(response.data));
-    //     setIsSubmitting(false);
-    //     navigate("/optConfirmation");
-    //     resetForm();
-    //   })
-    //   .catch((err) => {
-    //     if (err.response) {
-    //       setErr(err.response.data.errors);
-    //       setTimeout(() => {
-    //         setErr(false);
-    //       }, 3000);
-    //       setIsSubmitting(false);
-    //     }
-    //   });
+    axios
+      .post(`${apiUrl}/passwordReset`, values)
+      .then((response) => {
+        setErr(null);
+        setIsSubmitting(false);
+        navigate(`/otpConfirmation/${userId}`);
+        resetForm();
+      })
+      .catch((err) => {
+        if (err.response) {
+          setErr(err.response.data.errors);
+          setTimeout(() => {
+            setErr(false);
+          }, 3000);
+          setIsSubmitting(false);
+        }
+      });
   };
 
   return (
@@ -104,7 +107,7 @@ const ForgotPassword = () => {
 
             {isSubmitting ? (
               <button
-                disabled="true"
+                disabled={true}
                 type="submit"
                 className="border rounded-md py-2"
               >

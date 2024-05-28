@@ -9,6 +9,8 @@ import {
 import { CSSTransition } from "react-transition-group";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
+import { getApiUrl } from "../config";
+import axios from "axios";
 
 const Otp = () => {
   const [seconds, setSeconds] = useState(59);
@@ -16,6 +18,8 @@ const Otp = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [err, setErr] = useState(false);
   const navigate = useNavigate();
+  const apiUrl = getApiUrl(process.env.NODE_ENV);
+  const userId = JSON.parse(localStorage.getItem("user"))?.userId;
 
   const initialValues = {
     otp: "",
@@ -35,23 +39,23 @@ const Otp = () => {
 
   const submitForm = (values, { resetForm }) => {
     setIsSubmitting(true);
-    // axios
-    //   .post(`${apiUrl}/OTPConfirmation`, values, { withCredentials: true })
-    //   .then((response) => {
-    //     setErr(null);
-    //     setIsSubmitting(false);
-    //     navigate("/update-password/:userId");
-    //     resetForm();
-    //   })
-    //   .catch((err) => {
-    //     if (err.response) {
-    //       setErr(err.response.data.errors);
-    //       setTimeout(() => {
-    //         setErr(false);
-    //       }, 3000);
-    //       setIsSubmitting(false);
-    //     }
-    //   });
+    axios
+      .post(`${apiUrl}/OTPConfirmation`, values)
+      .then((response) => {
+        setErr(null);
+        setIsSubmitting(false);
+        navigate(`/updatePassword/${userId}`);
+        resetForm();
+      })
+      .catch((err) => {
+        if (err.response) {
+          setErr(err.response.data.errors);
+          setTimeout(() => {
+            setErr(false);
+          }, 3000);
+          setIsSubmitting(false);
+        }
+      });
   };
 
   useEffect(() => {
@@ -91,21 +95,21 @@ const Otp = () => {
       });
     }, 1000);
 
-    // axios
-    //   .post(`${apiUrl}/resend-OTP/${userId}`, {
-    //     withCredentials: true,
-    //   })
-    //   .then((response) => {
-    //     setErr(null);
-    //   })
-    //   .catch((err) => {
-    //     if (err.response) {
-    //       setErr(err.response.data.errors);
-    //       setTimeout(() => {
-    //         setErr(false);
-    //       }, 3000);
-    //     }
-    //   });
+    axios
+      .post(`${apiUrl}/resend-OTP/${userId}`, {
+        withCredentials: true,
+      })
+      .then((response) => {
+        setErr(null);
+      })
+      .catch((err) => {
+        if (err.response) {
+          setErr(err.response.data.errors);
+          setTimeout(() => {
+            setErr(false);
+          }, 3000);
+        }
+      });
   };
 
   return (
@@ -150,7 +154,7 @@ const Otp = () => {
 
             {isSubmitting ? (
               <button
-                disabled="true"
+                disabled={true}
                 type="submit"
                 className="border rounded-md py-2"
               >
@@ -159,7 +163,7 @@ const Otp = () => {
                 </div>
               </button>
             ) : (
-              <button type="submit" className="border rounded-md py-2">
+              <button type="submit" className="border rounded-md py-2 px-6">
                 <div>
                   Continue &nbsp;
                   <FontAwesomeIcon icon={faArrowRight} />

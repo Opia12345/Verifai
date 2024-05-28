@@ -1,7 +1,5 @@
 const express = require("express");
 const cors = require("cors");
-const jwt = require("jsonwebtoken");
-const User = require("./Models/User");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const Register = require("./Controllers/Register");
