@@ -15,6 +15,8 @@ const Delete = require("./Controllers/Delete");
 const App = require("./Controllers/App");
 const updateUsername = require("./Controllers/UpdateUsername");
 const allApps = require("./Controllers/AllApps");
+const DeleteApp = require("./Controllers/DeleteApps");
+const UpdateAppName = require("./Controllers/UpdateAppName");
 require("dotenv").config();
 
 //CONFIGURATIONS
@@ -56,3 +58,5 @@ app.post("/OTPConfirmation", OTPConfirmation.OTPConfirmation);
 //APP ENDPOINTS
 app.post("/create-app", App.App);
 app.get("/apps", allApps.allApps);
+app.delete(`/delete-app/:userId`, DeleteApp.DeleteApp);
+app.patch(`/update-app/:userId`, UpdateAppName.UpdateAppName);

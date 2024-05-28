@@ -4,6 +4,7 @@ import {
   faArrowRight,
   faCopy,
   faEllipsis,
+  faEnvelope,
   faEye,
   faEyeSlash,
   faLink,
@@ -99,7 +100,7 @@ const Dashboard = () => {
   };
 
   const passwordStrength = evaluatePasswordStrength(
-    selectedApp?.password || ""
+    selectedApp?.appPassword || ""
   );
 
   const handleChange = (e) => {
@@ -119,12 +120,12 @@ const Dashboard = () => {
       const response = await axios.post(`${apiUrl}/create-app`, newApp);
       setApps([...apps, response.data]);
       setAdd(false);
+      resetForm();
+      window.location.reload();
       setSuccess(response.data.message);
       setTimeout(() => {
         setSuccess(null);
       }, 3000);
-      resetForm();
-      window.location.reload();
     } catch (error) {
       console.error("Error adding new application:", error);
       setError(error);
@@ -146,9 +147,9 @@ const Dashboard = () => {
 
   const handleSaveApp = async () => {
     try {
-      const response = await axios.put(
-        `${apiUrl}/update-app/${selectedApp._id}`,
-        selectedApp
+      const response = await axios.patch(
+        `${apiUrl}/update-app-name/${selectedApp._id}`,
+        { appName: selectedApp.appName }
       );
       setApps(
         apps.map((app) => (app._id === selectedApp._id ? response.data : app))
@@ -156,8 +157,13 @@ const Dashboard = () => {
       setPopup(false);
     } catch (error) {
       console.error("Error updating application:", error);
+      setError(error);
+      setTimeout(() => {
+        setError(null);
+      }, 3000);
     }
   };
+  
 
   const handleDeleteApp = async () => {
     try {
@@ -166,6 +172,10 @@ const Dashboard = () => {
       setPopup(false);
     } catch (error) {
       console.error("Error deleting application:", error);
+      setError(error);
+      setTimeout(() => {
+        setError(null);
+      }, 3000);
     }
   };
 
@@ -229,37 +239,44 @@ const Dashboard = () => {
           />
         </span>
         <div className="mt-12 grid lg:grid-cols-3 md:grid-cols-2 gap-4">
-          {apps
-            .filter((app) =>
-              (app.name?.toLowerCase() || "").includes(search.toLowerCase())
-            )
-            .map((app, index) => (
-              <span
-                key={index}
-                onClick={() => handleAppClick(app)}
-                className="flex gap-4 bg-slate-200/5 hover:bg-slate-200/20 cursor-pointer transition-all ease-in-out duration-200 p-2 backdrop-blur-lg items-center justify-between rounded-md"
-              >
-                <div className="flex items-center gap-4">
-                  <img
-                    src={getDefaultImage(app.appName)}
-                    className="w-[40px]"
-                  />
-                  <div>
-                    <h5>{app.appName}</h5>
-                    <small className="text-xs text-slate-500">
-                      {app.appEmail}
-                    </small>
-                  </div>
+          {apps.length === 0 ? (
+            <div className="flex items-center justify-center flex-col mt-[150px] col-span-3 w-full gap-4">
+              <img src="/empty.png" className="w-[150px]" alt="" />
+              <h1>No Stored Passwords</h1>
+            </div>
+          ) : (
+            apps
+              .filter((app) =>
+                (app.name?.toLowerCase() || "").includes(search.toLowerCase())
+              )
+              .map((app, index) => (
+                <div key={index}>
+                  <span
+                    onClick={() => handleAppClick(app)}
+                    className="flex gap-4 bg-slate-200/5 hover:bg-slate-200/20 cursor-pointer transition-all ease-in-out duration-200 p-2 backdrop-blur-lg items-center justify-between rounded-md"
+                  >
+                    <div className="flex items-center gap-4">
+                      <img
+                        src={getDefaultImage(app.appName)}
+                        className="w-[40px]"
+                      />
+                      <div>
+                        <h5>{app.appName}</h5>
+                        <small className="text-xs text-slate-500">
+                          {app.appEmail}
+                        </small>
+                      </div>
+                    </div>
+                  </span>
                 </div>
-              </span>
-            ))}
+              ))
+          )}
           <span
             onClick={() => setAdd(true)}
-            className="flex gap-4 bg-slate-200/5 hover:bg-slate-200/20 cursor-pointer transition-all ease-in-out duration-200 p-2 backdrop-blur-lg items-center justify-between rounded-md"
+            className="p-4 h-4 w-4 bg-blue-700 flex items-center justify-center rounded-full fixed bottom-10 right-10"
           >
             <div className="flex items-center gap-4">
               <FontAwesomeIcon icon={faPlus} />
-              <h5>Add More</h5>
             </div>
           </span>
         </div>
@@ -284,12 +301,28 @@ const Dashboard = () => {
                 </div>
               </div>
               <div className="flex flex-col gap-4 items-start mt-6">
-                <label>Email Address</label>
+                <label>App Name</label>
                 <span className="flex items-center bg-slate-200/20 w-full gap-2 rounded-md p-2">
                   <FontAwesomeIcon icon={faUser} />
                   <input
+                    type="text"
+                    name="appName"
+                    value={selectedApp.appName}
+                    onChange={handleUpdateApp}
+                    className="bg-transparent text-white font-light text-xs w-full outline-none"
+                  />
+                  <FontAwesomeIcon
+                    icon={faCopy}
+                    onClick={() => handleCopy(selectedApp.appName)}
+                  />
+                </span>
+
+                <label>Email Address</label>
+                <span className="flex items-center bg-slate-200/20 w-full gap-2 rounded-md p-2">
+                  <FontAwesomeIcon icon={faEnvelope} />
+                  <input
                     type="email"
-                    name="email"
+                    name="appEmail"
                     value={selectedApp.appEmail}
                     onChange={handleUpdateApp}
                     className="bg-transparent text-white font-light text-xs w-full outline-none"
@@ -305,7 +338,7 @@ const Dashboard = () => {
                   <FontAwesomeIcon icon={faLock} />
                   <input
                     type={password ? "text" : "password"}
-                    name="password"
+                    name="appPassword"
                     value={selectedApp.appPassword}
                     onChange={handleUpdateApp}
                     className="bg-transparent text-white font-light text-xs w-full outline-none"
@@ -336,14 +369,14 @@ const Dashboard = () => {
                   <FontAwesomeIcon icon={faLink} />
                   <input
                     type="text"
-                    name="url"
+                    name="appUrl"
                     value={selectedApp.appUrl}
                     onChange={handleUpdateApp}
                     className="bg-transparent text-white font-light text-xs w-full outline-none"
                   />
                   <FontAwesomeIcon
                     icon={faCopy}
-                    onClick={() => handleCopy(selectedApp.url)}
+                    onClick={() => handleCopy(selectedApp.appUrl)}
                   />
                 </span>
                 <div className="flex gap-4">

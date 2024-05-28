@@ -1,6 +1,4 @@
 const { User, App } = require("../Models/User");
-const bcrypt = require("bcrypt");
-const saltRounds = 15;
 const Yup = require("yup");
 
 const Validation = Yup.object().shape({
