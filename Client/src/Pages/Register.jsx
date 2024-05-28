@@ -1,11 +1,6 @@
 import React, { useState } from "react";
 import { Formik, ErrorMessage, Field, Form } from "formik";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faFacebook,
-  faGithub,
-  faGoogle,
-} from "@fortawesome/free-brands-svg-icons";
 import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 import * as yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
@@ -13,8 +8,12 @@ import {
   faArrowRight,
   faEnvelope,
   faLock,
+  faTimesCircle,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
+import { getApiUrl } from "../config";
+import { CSSTransition } from "react-transition-group";
 
 const Register = () => {
   //STATES
@@ -22,7 +21,17 @@ const Register = () => {
   const [successSignup, setSuccessSignup] = useState(false);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const apiUrl = getApiUrl(process.env.NODE_ENV);
+  const userId = JSON.parse(localStorage.getItem("user"))?.userId;
   const redirect = useNavigate();
+
+  const styles = {
+    enter: "transform -translate-x-full opacity-0",
+    enterActive:
+      "transform translate-x-0 opacity-100 transition-all duration-500 ease-in-out",
+    exitActive:
+      "transform -translate-x-full opacity-0 transition-all duration-500 ease-in-out",
+  };
 
   const initialValues = {
     userName: "",
@@ -47,32 +56,38 @@ const Register = () => {
   });
 
   const submitForm = (values, { resetForm }) => {
-    // setLoading(true);
-    // axios
-    //   .post(`${apiUrl}/signup`, values)
-    //   .then((response) => {
-    //     setError(null);
-    //     setSuccessSignup(true);
-    // redirect("/emailConfirmation");
-    //     setTimeout(() => {
-    //       setSuccessSignup(false);
-    //     }, 3000);
-    //     resetForm();
-    //     setLoading(false);
-    //   })
-    //   .catch((err) => {
-    //     if (err.response) {
-    //       setError(err.response.data.error);
-    //       setTimeout(() => {
-    //         setError(false);
-    //       }, 3000);
-    //       setLoading(false);
-    //     }
-    //   });
+    setLoading(true);
+    axios
+      .post(`${apiUrl}/register`, values)
+      .then((response) => {
+        setError(null);
+        localStorage.setItem("user", JSON.stringify(response.data));
+        redirect(`/emailConfirmation/${userId}`);
+        resetForm();
+        setLoading(false);
+      })
+      .catch((err) => {
+        if (err.response) {
+          setError(err.response.data.error);
+          setTimeout(() => {
+            setError(false);
+          }, 3000);
+          setLoading(false);
+        }
+      });
   };
 
   return (
     <>
+      <CSSTransition in={error} classNames={styles} timeout={500} unmountOnExit>
+        <div className="fixed top-10 lg:right-[40%] z-50 bg-slate-200/5 backdrop-blur-lg p-4 rounded-md flex items-center justify-center">
+          <h5 className="flex items-center gap-4 text-center font-bold">
+            <FontAwesomeIcon className="text-red-500" icon={faTimesCircle} />
+            <h5>{error}</h5>
+          </h5>
+        </div>
+      </CSSTransition>
+
       <section className="bg-[url(/bg.jpg)] flex justify-center flex-col items-center bg-cover w-full bg-black/60 bg-blend-darken h-screen bg-center">
         <div className="flex justify-center flex-col items-center w-full p-8">
           <section className="">

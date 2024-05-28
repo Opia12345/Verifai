@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { faPaperPlane, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faArrowRight,
-  faEye,
-  faEyeSlash,
-  faTimes,
-  faTimesCircle,
-} from "@fortawesome/free-solid-svg-icons";
+import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import { CSSTransition } from "react-transition-group";
+import { getApiUrl } from "../config";
+import axios from "axios";
 
 const EmailConfirmation = () => {
   const [seconds, setSeconds] = useState(59);
   const [countdownComplete, setCountdownComplete] = useState(false);
   const [err, setErr] = useState(false);
+  const apiUrl = getApiUrl(process.env.NODE_ENV);
+  const userId = JSON.parse(localStorage.getItem("user"))?.userId;
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -80,11 +78,11 @@ const EmailConfirmation = () => {
   return (
     <>
       <CSSTransition in={err} classNames={styles} timeout={500} unmountOnExit>
-        <div className="flex justify-center fixed bottom-10 right-10">
-          <div className="flex items-center justify-center space-x-4 bg-red-700/30 w-auto px-4 py-2 rounded-md h-[40px]">
-            <FontAwesomeIcon icon={faTimesCircle} />
-            <small className="font-semibold">{err}</small>
-          </div>
+        <div className="fixed top-10 lg:right-[40%] z-50 bg-slate-200/5 backdrop-blur-lg p-4 rounded-md flex items-center justify-center">
+          <h5 className="flex items-center gap-4 text-center font-bold">
+            <FontAwesomeIcon className="text-red-500" icon={faTimesCircle} />
+            <h5>{err}</h5>
+          </h5>
         </div>
       </CSSTransition>
 
@@ -101,7 +99,7 @@ const EmailConfirmation = () => {
           <small>Didn't receive an email?</small>
           {countdownComplete && (
             <button
-              className="border rounded-md py-2"
+              className="border rounded-md py-2 px-6"
               onClick={handleResendEmail}
             >
               <FontAwesomeIcon icon={faPaperPlane} /> &nbsp; Resend Email

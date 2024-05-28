@@ -51,7 +51,10 @@ function App() {
         <Route index path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
         <Route path="/signin" element={<SignIn />} />
-        <Route path="/emailConfirmation" element={<EmailConfirmation />} />
+        <Route
+          path="/emailConfirmation/:userId"
+          element={<EmailConfirmation />}
+        />
         <Route path="/emailConfirmed" element={<EmailConfirmed />} />
         <Route path="/updatePassword" element={<UpdatePassword />} />
         <Route path="/passwordUpdated" element={<PasswordUpdated />} />

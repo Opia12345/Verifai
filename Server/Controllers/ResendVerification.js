@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
-const User = require("../Models/User");
+const { User } = require("../Models/User");
 
 // NODEMAILER
 const transporter = nodemailer.createTransport({
@@ -28,11 +28,11 @@ exports.resendVerification = async (req, res) => {
     const verificationLink = `${process.env.BASE_URL}/emailConfirmed?token=${refreshToken}`;
 
     let mailOptions = {
-        from: process.env.USERMAIL,
-        to: user.Email,
-        subject:
-          "Welcome to The Vault - Secure Your Account with Password Storage",
-        html: `<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 400px; background: white; color: black;">
+      from: process.env.USERMAIL,
+      to: user.Email,
+      subject:
+        "Welcome to The Vault - Secure Your Account with Password Storage",
+      html: `<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 400px; background: white; color: black;">
         <tr>
             <td align="center">
                 <img src="cid:logo" alt="Logo" style="width: 100%; display: block;">
@@ -59,14 +59,14 @@ exports.resendVerification = async (req, res) => {
         </tr>
     </table>
            `,
-        attachments: [
-          {
-            filename: "logo.png",
-            path: "./logo.png",
-            cid: "logo",
-          },
-        ],
-      };
+      attachments: [
+        {
+          filename: "logo.png",
+          path: "./logo.png",
+          cid: "logo",
+        },
+      ],
+    };
 
     transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
