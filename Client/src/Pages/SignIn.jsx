@@ -127,7 +127,14 @@ const SignIn = () => {
                     </div>
                   </button>
                 )}
-
+                <h4 className="flex text-center justify-center items-center mt-4 text-slate-400">
+                  <Link
+                    to="/forgotPassword"
+                    className="underline hover:text-white duration-300 ease-in"
+                  >
+                    Forgot Password?
+                  </Link>
+                </h4>
                 <h4 className="flex text-center items-center mt-4 text-slate-400">
                   Don't have an account?&nbsp;
                   <Link

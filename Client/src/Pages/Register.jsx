@@ -8,7 +8,7 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 import * as yup from "yup";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   faArrowRight,
   faEnvelope,
@@ -22,6 +22,7 @@ const Register = () => {
   const [successSignup, setSuccessSignup] = useState(false);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const redirect = useNavigate();
 
   const initialValues = {
     userName: "",
@@ -41,7 +42,7 @@ const Register = () => {
       .required("Password is required"),
     confirmPassword: yup
       .string()
-      .oneOf([yup.ref("password"), null], "Passwords must match")
+      .oneOf([yup.ref("Password"), null], "Passwords must match")
       .required("Please confirm your password"),
   });
 
@@ -52,6 +53,7 @@ const Register = () => {
     //   .then((response) => {
     //     setError(null);
     //     setSuccessSignup(true);
+    // redirect("/emailConfirmation");
     //     setTimeout(() => {
     //       setSuccessSignup(false);
     //     }, 3000);
@@ -173,10 +175,12 @@ const Register = () => {
                     </div>
                   </button>
                 )}
-
                 <h4 className="flex text-center items-center mt-4 text-slate-400">
                   Already have an account?&nbsp;
-                  <Link to='/signin' className="underline hover:text-white duration-300 ease-in">
+                  <Link
+                    to="/signin"
+                    className="underline hover:text-white duration-300 ease-in"
+                  >
                     Login.
                   </Link>
                 </h4>
