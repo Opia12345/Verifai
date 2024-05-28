@@ -8,7 +8,7 @@ export const UserProvider = ({ children }) => {
 
   useEffect(() => {
     const storedUserEmail = localStorage.getItem("userEmail");
-    const storedUserName = localStorage.getItem("FirstName");
+    const storedUserName = localStorage.getItem("userName");
     if (storedUserEmail) {
       setUserEmail(storedUserEmail);
     }
@@ -24,7 +24,7 @@ export const UserProvider = ({ children }) => {
 
   const updateUsername = (name) => {
     setUsername(name);
-    localStorage.setItem("FirstName", name);
+    localStorage.setItem("userName", name);
   };
 
   return (
