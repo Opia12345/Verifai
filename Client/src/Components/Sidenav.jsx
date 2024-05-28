@@ -24,14 +24,6 @@ const Sidenav = () => {
     setMobileNav(false);
   };
 
-  const styles = {
-    enter: "transform translate-x-full opacity-0",
-    enterActive:
-      "transform -translate-x-0 opacity-100 transition-all duration-500 ease-in-out",
-    exitActive:
-      "transform translate-x-full opacity-0 transition-all duration-500 ease-in-out",
-  };
-
   const styles2 = {
     enter: "transform -translate-x-full opacity-0",
     enterActive:
@@ -113,7 +105,7 @@ const Sidenav = () => {
                     icon={faUserAlt}
                     className="text-lg text-blue-600"
                   />
-                  <h5>{username}</h5>
+                  <h5 className="trunc">{username}</h5>
                 </div>
                 <div className="h-2 w-2 bg-green-500 rounded-full"></div>
               </span>
@@ -200,7 +192,7 @@ const Sidenav = () => {
                     icon={faUserAlt}
                     className="text-lg text-blue-600"
                   />
-                  <h5>{username}</h5>
+                  <h5 className="trunc">{username}</h5>
                 </div>
                 <div className="h-2 w-2 bg-green-500 rounded-full"></div>
               </span>
