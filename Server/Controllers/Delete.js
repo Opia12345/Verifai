@@ -1,4 +1,4 @@
-const User = require("../Models/User");
+const { User } = require("../Models/User");
 
 exports.Delete = async (req, res) => {
   const { userId } = req.params;

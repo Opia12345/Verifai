@@ -1,27 +1,48 @@
 import {
   faPlus,
   faSignOut,
+  faTimesCircle,
   faTrash,
   faUserAlt,
   faUserPlus,
   faX,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Sidenav from "../Components/Sidenav";
 import { CSSTransition } from "react-transition-group";
+import { useAuthContext } from "../Hooks/useAuthContext";
+import axios from "axios";
+import { getApiUrl } from "../config";
 
 const AccountSettings = () => {
   const [deleteAccount, setDeleteAccount] = useState(false);
-  const [switchAccount, setSwitchAccount] = useState(false);
   const [logOut, setLogOut] = useState(false);
-  const redirect = useNavigate();
+  const [err, setErr] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate();
+  const { dispatch } = useAuthContext();
+  const apiUrl = getApiUrl(process.env.NODE_ENV);
+  const userId = JSON.parse(localStorage.getItem("user"))?.userId;
 
   const Logout = () => {
-    localStorage.removeItem("user");
-    dispatch({ type: "LOGOUT" });
-    redirect("/");
+    axios
+      .post(`${apiUrl}/logout`)
+      .then((response) => {
+        setErr(null);
+        localStorage.removeItem("user");
+        dispatch({ type: "LOGOUT" });
+        navigate("/signin");
+      })
+      .catch((err) => {
+        if (err.response) {
+          setErr(err.response.data.error);
+          setTimeout(() => {
+            setErr(false);
+          }, 3000);
+        }
+      });
   };
 
   const styles = {
@@ -32,28 +53,40 @@ const AccountSettings = () => {
       "transform -translate-x-full opacity-0 transition-all duration-500 ease-in-out",
   };
 
-  const handleDeleteAccount = () => {
-    // if (user.data.userId) {
-    //   const userId = user.data.userId;
-    //   axios
-    //     .delete(`${apiUrl}/users/delete/${userId}`)
-    //     .then((response) => {
-    //       console.log(response.data);
-    //       localStorage.removeItem("user");
-    //       dispatch({ type: "LOGOUT" });
-    //       redirect("/");
-    //     })
-    //     .catch((error) => {
-    //       console.error("Error while deleting account:", error);
-    //     });
-    // } else {
-    //   console.error("User ID is undefined");
-    // }
+  const deleteAcc = () => {
+    axios
+      .delete(`${apiUrl}/users/delete/${userId}`)
+      .then((response) => {
+        setErr(null);
+        localStorage.removeItem("user");
+        localStorage.removeItem("userName");
+        localStorage.removeItem("userEmail");
+        dispatch({ type: "LOGOUT" });
+        navigate("/");
+        window.location.reload();
+      })
+      .catch((err) => {
+        if (err.response) {
+          setErr(err.response.data.message);
+          setTimeout(() => {
+            setErr(false);
+          }, 3000);
+          setIsSubmitting(false);
+        }
+      });
   };
 
   return (
     <>
       <Sidenav />
+      <CSSTransition in={err} classNames={styles} timeout={500} unmountOnExit>
+        <div className="fixed top-10 lg:right-[40%] z-50 bg-slate-200/5 backdrop-blur-lg p-4 rounded-md flex items-center justify-center">
+          <h5 className="flex items-center gap-4 text-center font-bold">
+            <FontAwesomeIcon className="text-red-500" icon={faTimesCircle} />
+            <small>{err}.</small>
+          </h5>
+        </div>
+      </CSSTransition>
       <section className="lg:ml-[250px] lg:p-8 p-4 h-screen">
         <h1 className="font-bold text-3xl">Account Settings</h1>
         <div className="flex flex-col justify-center mt-8">
@@ -91,7 +124,7 @@ const AccountSettings = () => {
                 </small>
                 <div className="space-x-3 mt-4">
                   <button
-                    onClick={handleDeleteAccount}
+                    onClick={deleteAcc}
                     className="bg-red-500 p-2 transition ease-in-out duration-200 rounded-md hover:bg-red-700"
                   >
                     Delete
