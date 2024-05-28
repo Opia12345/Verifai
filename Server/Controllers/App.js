@@ -20,12 +20,10 @@ exports.App = async (req, res) => {
       { abortEarly: false }
     );
 
-    const hashedPassword = await bcrypt.hash(appPassword, saltRounds);
-
     const newUser = new App({
       appName,
       appEmail,
-      appPassword: hashedPassword,
+      appPassword,
       appUrl,
     });
 

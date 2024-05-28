@@ -34,7 +34,6 @@ const appSchema = new Schema(
     appEmail: {
       type: String,
       required: [true, "Email Address is required"],
-      unique: true,
     },
     appPassword: {
       type: String,

@@ -14,6 +14,7 @@ const logout = require("./Controllers/Logout");
 const Delete = require("./Controllers/Delete");
 const App = require("./Controllers/App");
 const updateUsername = require("./Controllers/UpdateUsername");
+const allApps = require("./Controllers/AllApps");
 require("dotenv").config();
 
 //CONFIGURATIONS
@@ -54,3 +55,4 @@ app.post("/OTPConfirmation", OTPConfirmation.OTPConfirmation);
 
 //APP ENDPOINTS
 app.post("/create-app", App.App);
+app.get("/apps", allApps.allApps);
