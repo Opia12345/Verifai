@@ -766,6 +766,14 @@ video {
   margin-bottom: 3rem;
 }
 
+.mt-\[1\] {
+  margin-top: 1;
+}
+
+.mt-\[100px\] {
+  margin-top: 100px;
+}
+
 .block {
   display: block;
 }
@@ -932,6 +940,10 @@ video {
 
 .w-\[40\%\] {
   width: 40%;
+}
+
+.w-\[70px\] {
+  width: 70px;
 }
 
 .max-w-\[800px\] {
@@ -1225,6 +1237,14 @@ video {
   background-color: rgb(126 34 206 / var(--tw-bg-opacity));
 }
 
+.bg-\[\] {
+  background-color: ;
+}
+
+.bg-\[url\] {
+  background-color: url;
+}
+
 .bg-opacity-50 {
   --tw-bg-opacity: 0.5;
 }
@@ -1233,12 +1253,36 @@ video {
   background-image: url(/bg.jpg);
 }
 
+.bg-\[url\(\)\] {
+  background-image: url();
+}
+
+.bg-\[url\(\'\'\)\] {
+  background-image: url('');
+}
+
+.bg-\[url\(\'\/\'\)\] {
+  background-image: url('/');
+}
+
+.bg-\[url\(\'\/header\.\'\)\] {
+  background-image: url('/header.');
+}
+
+.bg-\[url\(\'\/header\.jpg\'\)\] {
+  background-image: url('/header.jpg');
+}
+
 .bg-cover {
   background-size: cover;
 }
 
 .bg-center {
   background-position: center;
+}
+
+.bg-no-repeat {
+  background-repeat: no-repeat;
 }
 
 .object-cover {
@@ -1294,6 +1338,11 @@ video {
   padding-bottom: 0.5rem;
 }
 
+.py-1 {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
 .text-center {
   text-align: center;
 }
@@ -1335,6 +1384,11 @@ video {
 
 .text-6xl {
   font-size: 3.75rem;
+  line-height: 1;
+}
+
+.text-5xl {
+  font-size: 3rem;
   line-height: 1;
 }
 
