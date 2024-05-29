@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Sidenav from "../Components/Sidenav";
 import {
   faArrowRight,
   faCopy,
@@ -62,8 +61,7 @@ const Dashboard = () => {
     const fetchApps = async () => {
       try {
         const response = await axios.get(`${apiUrl}/apps`);
-        const newApps = Array.isArray(response.data) ? response.data : [];
-        setApps(newApps);
+        setApps(response.data);
       } catch (error) {
         console.error("Error fetching apps:", error);
       }
@@ -205,7 +203,6 @@ const Dashboard = () => {
           </h5>
         </div>
       </CSSTransition>
-      <Sidenav />
       <section className="lg:ml-[250px] lg:p-8 p-4 h-screen">
         <h1 className="font-bold text-3xl">Passwords</h1>
         <span className="flex items-center bg-slate-200/20 md:w-1/2 w-full gap-2 g:p-8 rounded-md p-2 mt-4 lg:ml-[250px]">
@@ -227,7 +224,7 @@ const Dashboard = () => {
           ) : (
             apps
               .filter((app) =>
-                (app.appName.toLowerCase() || "").includes(
+                (app.appName?.toLowerCase() || "").includes(
                   search.toLowerCase()
                 )
               )

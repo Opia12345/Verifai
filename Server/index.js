@@ -42,7 +42,7 @@ mongoose
     console.log(err.message);
   });
 
-app.get("*", (req, res) => {
+app.get("/", (req, res) => {
   res.sendFile(path + "index.html");
 });
 app.post("/register", Register.Register);

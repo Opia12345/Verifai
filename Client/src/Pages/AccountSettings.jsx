@@ -78,7 +78,6 @@ const AccountSettings = () => {
 
   return (
     <>
-      <Sidenav />
       <CSSTransition in={err} classNames={styles} timeout={500} unmountOnExit>
         <div className="fixed top-10 lg:right-[40%] z-50 bg-slate-200/5 backdrop-blur-lg p-4 rounded-md flex items-center justify-center">
           <h5 className="flex items-center gap-4 text-center font-bold">

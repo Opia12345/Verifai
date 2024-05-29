@@ -10,7 +10,6 @@ import Sidenav from "../Components/Sidenav";
 const Settings = () => {
   return (
     <>
-      <Sidenav />
       <section className="lg:ml-[250px] lg:p-8 p-4 h-screen">
         <div className="">
           <h1 className="font-bold text-3xl">Settings</h1>

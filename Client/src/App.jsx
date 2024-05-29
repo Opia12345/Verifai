@@ -22,6 +22,7 @@ import OtpOne from "./Routes/OtpOne";
 import OtpTwo from "./Routes/OtpTwo";
 import QrOne from "./Routes/QrOne";
 import QrTwo from "./Routes/QrTwo";
+import Sidenav from "./Components/Sidenav";
 function App() {
   const redirect = useNavigate();
   const route = useLocation();
@@ -50,8 +51,33 @@ function App() {
       window.removeEventListener("popstate", handleBackButton);
     };
   }, [userId, redirect]);
+
+  const showNav =
+    userId &&
+    ![
+      "/",
+      "/register",
+      "/signin",
+      "/emailConfirmation/:userId",
+      "/emailConfirmed",
+      "/passwordUpdated",
+      "/updatePassword/:userId",
+      "/unauthorized",
+      "/otpConfirmation/:userId",
+      "/forgotPassword",
+      "/otpOne",
+      "/otpTwo",
+      "/qrOne",
+      "/qrTwo",
+      "*",
+    ].includes(route.pathname);
   return (
     <>
+      {showNav && (
+        <>
+          <Sidenav />
+        </>
+      )}
       <Routes>
         <Route index path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />

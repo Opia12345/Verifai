@@ -106,7 +106,6 @@ const Help = () => {
         </div>
       </CSSTransition>
 
-      <Sidenav />
       <section className="lg:ml-[250px] lg:p-8 p-4 h-screen">
         <h1 className="font-bold text-3xl">Contact Us</h1>
         <div className="w-full lg:p-10 flex items-center justify-center relative flex-col">

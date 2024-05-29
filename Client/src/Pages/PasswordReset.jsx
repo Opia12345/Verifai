@@ -164,7 +164,6 @@ const PasswordReset = () => {
         </div>
       </CSSTransition>
 
-      <Sidenav />
       <section className="lg:ml-[250px] lg:p-8 p-4 h-screen">
         <h1 className="font-bold text-3xl">Update Account</h1>
         <div className="flex items-center flex-col mt-4">
