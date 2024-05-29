@@ -10,7 +10,7 @@ const QrOne = () => {
   const qrCodeRef = useRef(null);
   const [qrIsVisible, setQrIsVisible] = useState(false);
   const [deets, setDeets] = useState(false);
-  const url = "https://apple.com";
+  const url = "https://thevault-ae9i.onrender.com";
   const handleQrCodeGenerator = () => {
     if (!url) {
       return;

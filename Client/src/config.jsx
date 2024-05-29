@@ -1,7 +1,7 @@
 // PRODUCTION CONTROL
 const apiUrls = {
     development: "http://localhost:8080",
-    production: "https://thevault.onrender.com",
+    production: "https://thevault-ae9i.onrender.com",
   };
   
   export const getApiUrl = (env) => {
