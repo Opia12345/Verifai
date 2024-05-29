@@ -61,7 +61,7 @@ const SignIn = () => {
         updateUserEmail(response.data.userEmail);
         updateUsername(response.data.userName);
         dispatch({ type: "LOGIN", payload: response });
-        navigate("/dashboard");
+        navigate("/options");
         resetForm();
       })
       .catch((err) => {

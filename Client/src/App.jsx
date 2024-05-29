@@ -17,6 +17,11 @@ import UpdatePassword from "./Routes/UpdatePassword";
 import PasswordUpdated from "./Routes/PasswordUpdated";
 import Fallback from "./Routes/FallBack";
 import { useEffect } from "react";
+import SignOptions from "./Pages/SignOptions";
+import OtpOne from "./Routes/OtpOne";
+import OtpTwo from "./Routes/OtpTwo";
+import QrOne from "./Routes/QrOne";
+import QrTwo from "./Routes/QrTwo";
 function App() {
   const redirect = useNavigate();
   const route = useLocation();
@@ -57,9 +62,14 @@ function App() {
         />
         <Route path="/emailConfirmed" element={<EmailConfirmed />} />
         <Route path="/updatePassword/:userId" element={<UpdatePassword />} />
+        <Route path="/options" element={<SignOptions />} />
         <Route path="/passwordUpdated" element={<PasswordUpdated />} />
         <Route path="/otpConfirmation/:userId" element={<Otp />} />
         <Route path="/forgotPassword" element={<ForgotPassword />} />
+        <Route path="/otpOne" element={<OtpOne />} />
+        <Route path="/otpTwo" element={<OtpTwo />} />
+        <Route path="/qrOne" element={<QrOne />} />
+        <Route path="/qrTwo" element={<QrTwo />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/generator" element={<PasswordGenerator />} />
         <Route path="/settings" element={<Settings />} />
