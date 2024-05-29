@@ -762,6 +762,10 @@ video {
   margin-bottom: 2rem;
 }
 
+.mb-12 {
+  margin-bottom: 3rem;
+}
+
 .block {
   display: block;
 }
@@ -999,6 +1003,10 @@ video {
 
 .items-center {
   align-items: center;
+}
+
+.justify-start {
+  justify-content: flex-start;
 }
 
 .justify-center {
@@ -1340,6 +1348,10 @@ video {
 
 .font-semibold {
   font-weight: 600;
+}
+
+.font-black {
+  font-weight: 900;
 }
 
 .capitalize {
@@ -1713,6 +1725,10 @@ body {
 
   .lg\:right-\[37\%\] {
     right: 37%;
+  }
+
+  .lg\:right-\[34\%\] {
+    right: 34%;
   }
 
   .lg\:ml-\[250px\] {

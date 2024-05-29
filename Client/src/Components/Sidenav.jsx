@@ -51,7 +51,11 @@ const Sidenav = () => {
     <>
       {!mobile && (
         <>
-          <nav className="w-[250px] text-white h-screen py-10 bg-slate-200/5 backdrop-blur-md z-50 fixed left-0 top-0 p-8 flex flex-col justify-center">
+          <nav className="w-[250px] text-white h-screen py-10 bg-slate-200/5 backdrop-blur-md z-50 fixed left-0 top-0 p-8 flex flex-col justify-start">
+            <div className="flex flex-col justify-center items-center mb-12">
+              <img src="/logo.png" alt="" />
+              <h5 className="font-black text-xl">The Vault</h5>
+            </div>
             <div className="">
               <NavLink to="/dashboard" onClick={() => handleLinkClick("/")}>
                 <span
@@ -133,12 +137,16 @@ const Sidenav = () => {
         unmountOnExit
       >
         <>
-          <nav className="w-full h-screen bg-slate-200/5 text-white backdrop-blur-md z-50 overflow-y-scroll p-4 fixed left-0 top-0 flex flex-col justify-center">
+          <nav className="w-full h-screen bg-slate-200/5 text-white backdrop-blur-md z-50 overflow-y-scroll p-4 fixed left-0 top-0 flex flex-col justify-start">
             <FontAwesomeIcon
               className="fixed top-10 right-10 text-white cursor-pointer"
               onClick={() => setMobileNav(false)}
               icon={faTimes}
             />
+            <div className="flex flex-col justify-center items-center mb-12">
+              <img src="/logo.png" alt="" />
+              <h5 className="font-black text-xl">The Vault</h5>
+            </div>
             <div className="">
               <NavLink to="/dashboard" onClick={() => handleLinkClick("/")}>
                 <span

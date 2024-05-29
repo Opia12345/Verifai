@@ -1,11 +1,15 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { Html5QrcodeScanner } from "html5-qrcode";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCheckCircle,
+  faTimesCircle,
+} from "@fortawesome/free-solid-svg-icons";
 import { CSSTransition } from "react-transition-group";
 
 const QrTwo = () => {
   const [scanResult, setScanResult] = useState(null);
+  const [err, setErr] = useState(false);
   const url = "https://apple.com";
 
   useEffect(() => {
@@ -23,7 +27,10 @@ const QrTwo = () => {
       scanner.clear();
       setScanResult(result);
       if (result === url) {
+        setScanResult(true);
         window.location.href = result;
+      } else {
+        setErr(true);
       }
     }
 
@@ -60,6 +67,18 @@ const QrTwo = () => {
         </div>
       </CSSTransition>
 
+      <CSSTransition in={err} classNames={styles} timeout={500} unmountOnExit>
+        <div className="fixed top-10 lg:right-[30%] z-50 bg-slate-200/5 backdrop-blur-lg p-4 rounded-md flex items-center justify-center">
+          <h5 className="flex items-center gap-4 text-center font-bold">
+            <FontAwesomeIcon className="text-red-500" icon={faTimesCircle} />
+            <small>
+              The provided QR Code does not seem to be valid. Please repeat the
+              process.
+            </small>
+          </h5>
+        </div>
+      </CSSTransition>
+
       <div
         id="reader"
         className="flex justify-center items-center bg-slate-200/20 p-4"
@@ -67,7 +86,7 @@ const QrTwo = () => {
           border: "1px dashed white",
           padding: "20px",
           margin: "20px",
-          width: "60%",
+          width: "400px",
           borderRadius: "10px",
         }}
       ></div>
