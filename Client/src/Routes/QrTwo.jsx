@@ -81,7 +81,7 @@ const QrTwo = () => {
 
       <div
         id="reader"
-        className="flex justify-center items-center bg-slate-200/20 p-4"
+        className="flex justify-center items-center bg-slate-200/20 p-8"
         style={{
           border: "1px dashed white",
           padding: "20px",

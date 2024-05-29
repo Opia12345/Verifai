@@ -30,7 +30,7 @@ function App() {
   useEffect(() => {
     if (
       !userId &&
-      !["/", "/register", "/signin", "/emailConfirmed", "/qrOne"].includes(route.pathname)
+      !["/", "/register", "/signin", "/emailConfirmed"].includes(route.pathname)
     ) {
       redirect("/unauthorized");
     }
