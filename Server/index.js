@@ -42,9 +42,6 @@ mongoose
     console.log(err.message);
   });
 
-app.get("/", (req, res) => {
-  res.sendFile(path + "index.html");
-});
 app.post("/register", Register.Register);
 app.post("/signin", signIn.signIn);
 app.post("/logout", logout.logout);
@@ -61,3 +58,7 @@ app.post("/OTPConfirmation", OTPConfirmation.OTPConfirmation);
 app.post("/create-app", App.App);
 app.get("/apps", allApps.allApps);
 app.delete(`/delete-app/:userId`, DeleteApp.DeleteApp);
+
+app.get("*", (req, res) => {
+  res.sendFile(path + "index.html");
+});

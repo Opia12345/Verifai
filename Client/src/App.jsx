@@ -69,7 +69,6 @@ function App() {
       "/otpTwo",
       "/qrOne",
       "/qrTwo",
-      "*",
     ].includes(route.pathname);
   return (
     <>
