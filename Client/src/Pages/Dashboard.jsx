@@ -3,17 +3,16 @@ import Sidenav from "../Components/Sidenav";
 import {
   faArrowRight,
   faCopy,
-  faEllipsis,
   faEnvelope,
   faEye,
   faEyeSlash,
   faLink,
   faLock,
   faMagnifyingGlass,
-  faPlay,
   faPlus,
   faTimes,
   faTimesCircle,
+  faTrashCan,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -128,7 +127,7 @@ const Dashboard = () => {
       }, 3000);
     } catch (error) {
       console.error("Error adding new application:", error);
-      setError(error);
+      setError(error.response?.data?.message || "Error Deleting application");
       setTimeout(() => {
         setError(null);
       }, 3000);
@@ -145,37 +144,17 @@ const Dashboard = () => {
     setSelectedApp({ ...selectedApp, [name]: value });
   };
 
-  const handleSaveApp = async () => {
-    try {
-      const response = await axios.patch(
-        `${apiUrl}/update-app-name/${selectedApp._id}`,
-        { appName: selectedApp.appName }
-      );
-      setApps(
-        apps.map((app) => (app._id === selectedApp._id ? response.data : app))
-      );
-      setPopup(false);
-    } catch (error) {
-      console.error("Error updating application:", error);
-      setError(error);
-      setTimeout(() => {
-        setError(null);
-      }, 3000);
-    }
-  };
-  
-
   const handleDeleteApp = async () => {
     try {
       await axios.delete(`${apiUrl}/delete-app/${selectedApp._id}`);
       setApps(apps.filter((app) => app._id !== selectedApp._id));
       setPopup(false);
     } catch (error) {
-      console.error("Error deleting application:", error);
-      setError(error);
+      setError(error.response?.data?.message || "Error Deleting application");
       setTimeout(() => {
         setError(null);
       }, 3000);
+      console.error("Error deleting application:", error);
     }
   };
 
@@ -261,7 +240,7 @@ const Dashboard = () => {
                         className="w-[40px]"
                       />
                       <div>
-                        <h5>{app.appName}</h5>
+                        <h5 className="text-lg font-bold">{app.appName}</h5>
                         <small className="text-xs text-slate-500">
                           {app.appEmail}
                         </small>
@@ -275,7 +254,7 @@ const Dashboard = () => {
             onClick={() => setAdd(true)}
             className="p-4 h-4 w-4 bg-blue-700 flex items-center justify-center rounded-full fixed bottom-10 right-10"
           >
-            <div className="flex items-center gap-4">
+            <div className="flex items-center text-lg gap-4">
               <FontAwesomeIcon icon={faPlus} />
             </div>
           </span>
@@ -286,18 +265,19 @@ const Dashboard = () => {
         <div className="fixed h-screen w-full z-50 flex items-center justify-center top-0 right-0 bg-slate-200/5 backdrop-blur-xl">
           <FontAwesomeIcon
             icon={faTimes}
-            className="fixed top-10 right-10 text-xl cursor-pointer"
+            className="fixed top-8 right-8 text-xl cursor-pointer"
             onClick={() => setPopup(false)}
           />
           {selectedApp && (
-            <div className="bg-slate-900 p-12 rounded-md w-[90%] lg:w-[60%]">
-              <div className="flex justify-center items-center flex-col">
+            <div className="bg-slate-900 p-12 rounded-md w-[90%] lg:w-[40%]">
+              <div className="flex justify-center items-center gap-2">
                 <img
                   src={getDefaultImage(selectedApp.appName)}
                   className="w-[40px]"
                 />
                 <div>
                   <h5 className="text-xl font-bold">{selectedApp.appName}</h5>
+                  <h5 className="text-xs">{selectedApp.appEmail}</h5>
                 </div>
               </div>
               <div className="flex flex-col gap-4 items-start mt-6">
@@ -379,22 +359,13 @@ const Dashboard = () => {
                     onClick={() => handleCopy(selectedApp.appUrl)}
                   />
                 </span>
-                <div className="flex gap-4">
-                  <button
-                    onClick={handleSaveApp}
-                    className="flex items-center gap-2 border rounded-md py-2 px-6 hover:bg-slate-200/10 duration-300 ease-in-out transition-all"
-                  >
-                    <FontAwesomeIcon icon={faArrowRight} className="" />
-                    <h5 className="text-xs">Save</h5>
-                  </button>
-                  <button
-                    onClick={handleDeleteApp}
-                    className="flex items-center gap-2 border rounded-md py-2 px-6 hover:bg-red-600 duration-300 ease-in-out transition-all text-red-600"
-                  >
-                    <FontAwesomeIcon icon={faTimes} className="" />
-                    <h5 className="text-xs">Delete</h5>
-                  </button>
-                </div>
+                <button
+                  onClick={handleDeleteApp}
+                  className="flex items-center gap-2 rounded-md py-2 px-6 bg-red-600 hover:bg-red-800 duration-300 ease-in-out transition-all"
+                >
+                  <FontAwesomeIcon icon={faTrashCan} className="" />
+                  <h5 className="text-xs">Delete App</h5>
+                </button>
               </div>
             </div>
           )}
