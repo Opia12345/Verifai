@@ -20,7 +20,7 @@ require("dotenv").config();
 
 //CONFIGURATIONS
 const app = express();
-const path = __dirname + "/views/";
+const path = __dirname + "/Views/";
 const port = process.env.port || 8080;
 app.use(express.static(path));
 app.use(cors());
@@ -42,6 +42,9 @@ mongoose
     console.log(err.message);
   });
 
+app.get("*", (req, res) => {
+  res.sendFile(path + "index.html");
+});
 app.post("/register", Register.Register);
 app.post("/signin", signIn.signIn);
 app.post("/logout", logout.logout);

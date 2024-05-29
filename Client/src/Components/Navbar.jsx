@@ -1,17 +1,10 @@
-import {
-  faBarsStaggered,
-  faTimes,
-  faUserAlt,
-  faUserPlus,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
   return (
     <>
-      <header className="flex justify-center items-center h-screen w-full bg-[url('/header.jpg')] bg-cover bg-center bg-no-repeat">
+      <header className="flex justify-center items-center h-screen w-full bg-[url('/bg.jpg')] bg-black/60 bg-blend-darken bg-cover bg-center bg-no-repeat">
         <nav className="p-4 fixed w-full inset-x-0 top-0 z-50 flex items-center justify-around">
           <span className="flex items-center">
             <img className={`w-[70px] cursor-pointer`} src="logo.png" alt="" />
