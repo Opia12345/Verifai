@@ -10,7 +10,7 @@ import { CSSTransition } from "react-transition-group";
 const QrTwo = () => {
   const [scanResult, setScanResult] = useState(null);
   const [err, setErr] = useState(false);
-  const url = "https://thevault-ae9i.onrender.com";
+  const url = "https://thevault-ae9i.onrender.com/dashboard";
 
   useEffect(() => {
     const scanner = new Html5QrcodeScanner("reader", {

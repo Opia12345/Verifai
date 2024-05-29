@@ -10,11 +10,7 @@ const QrOne = () => {
   const qrCodeRef = useRef(null);
   const [qrIsVisible, setQrIsVisible] = useState(false);
   const [deets, setDeets] = useState(false);
-  const url = "https://thevault-ae9i.onrender.com";
   const handleQrCodeGenerator = () => {
-    if (!url) {
-      return;
-    }
     setQrIsVisible(true);
     setDeets(true);
   };
@@ -78,7 +74,11 @@ const QrOne = () => {
             >
               <div className="fixed top-0 right-0 w-full h-screen flex items-center justify-center bg-slate-200/5 backdrop-blur-lg">
                 <div className="flex flex-col items-center" ref={qrCodeRef}>
-                  <QRCode onClick={downloadQRCode} value={url} size={300} />
+                  <QRCode
+                    onClick={downloadQRCode}
+                    value="https://thevault-ae9i.onrender.com/dashboard"
+                    size={300}
+                  />
                 </div>
               </div>
             </CSSTransition>
