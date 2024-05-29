@@ -62,7 +62,8 @@ const Dashboard = () => {
     const fetchApps = async () => {
       try {
         const response = await axios.get(`${apiUrl}/apps`);
-        setApps(response.data);
+        const newApps = Array.isArray(response.data) ? response.data : [];
+        setApps(newApps);
       } catch (error) {
         console.error("Error fetching apps:", error);
       }
@@ -226,7 +227,9 @@ const Dashboard = () => {
           ) : (
             apps
               .filter((app) =>
-                (app.name?.toLowerCase() || "").includes(search.toLowerCase())
+                (app.appName.toLowerCase() || "").includes(
+                  search.toLowerCase()
+                )
               )
               .map((app, index) => (
                 <div key={index}>
