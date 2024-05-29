@@ -30,18 +30,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const dbURI = process.env.dbURI;
 
-mongoose
-  .connect(dbURI)
-  .then(() => {
-    console.log(`Loading...`);
-    app.listen(port, () => {
-      console.log(`Server running on ${port} and MongoDB connected`);
-    });
-  })
-  .catch((err) => {
-    console.log(err.message);
-  });
-
 app.post("/register", Register.Register);
 app.post("/signin", signIn.signIn);
 app.post("/logout", logout.logout);
@@ -59,6 +47,19 @@ app.post("/create-app", App.App);
 app.get("/apps", allApps.allApps);
 app.delete(`/delete-app/:userId`, DeleteApp.DeleteApp);
 
+//WILDCARD ROUTE
 app.get("*", (req, res) => {
   res.sendFile(path + "index.html");
 });
+
+mongoose
+  .connect(dbURI)
+  .then(() => {
+    console.log(`Loading...`);
+    app.listen(port, () => {
+      console.log(`Server running on ${port} and MongoDB connected`);
+    });
+  })
+  .catch((err) => {
+    console.log(err.message);
+  });
