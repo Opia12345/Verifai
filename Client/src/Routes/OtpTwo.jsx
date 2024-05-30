@@ -44,6 +44,7 @@ const OtpTwo = () => {
       .then((response) => {
         setErr(null);
         setIsSubmitting(false);
+        localStorage.setItem("enter", "true");
         navigate(`/dashboard`);
         resetForm();
       })

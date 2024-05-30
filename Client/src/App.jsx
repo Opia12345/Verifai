@@ -23,25 +23,28 @@ import OtpTwo from "./Routes/OtpTwo";
 import QrOne from "./Routes/QrOne";
 import QrTwo from "./Routes/QrTwo";
 import Sidenav from "./Components/Sidenav";
+
 function App() {
-  const redirect = useNavigate();
-  const route = useLocation();
+  const navigate = useNavigate();
+  const location = useLocation();
   const userId = JSON.parse(localStorage.getItem("user"))?.userId;
 
   useEffect(() => {
     if (
       !userId &&
-      !["/", "/register", "/signin", "/emailConfirmed"].includes(route.pathname)
+      !["/", "/register", "/signin", "/emailConfirmed"].includes(
+        location.pathname
+      )
     ) {
-      redirect("/unauthorized");
+      navigate("/unauthorized");
     }
-  }, []);
+  }, [userId, location.pathname, navigate]);
 
   useEffect(() => {
     const handleBackButton = (event) => {
       if (!userId) {
         event.preventDefault();
-        redirect("/");
+        navigate("/");
       }
     };
 
@@ -50,33 +53,36 @@ function App() {
     return () => {
       window.removeEventListener("popstate", handleBackButton);
     };
-  }, [userId, redirect]);
+  }, [userId, navigate]);
+
+  const excludedRoutes = [
+    "/",
+    "/register",
+    "/signin",
+    "/emailConfirmation/:userId",
+    "/emailConfirmed",
+    "/passwordUpdated",
+    "/updatePassword/:userId",
+    "/unauthorized",
+    "/otpConfirmation/:userId",
+    "/forgotPassword",
+    "/otpOne",
+    "/otpTwo",
+    "/qrOne",
+    "/qrTwo",
+  ];
 
   const showNav =
     userId &&
-    ![
-      "/",
-      "/register",
-      "/signin",
-      "/emailConfirmation/:userId",
-      "/emailConfirmed",
-      "/passwordUpdated",
-      "/updatePassword/:userId",
-      "/unauthorized",
-      "/otpConfirmation/:userId",
-      "/forgotPassword",
-      "/otpOne",
-      "/otpTwo",
-      "/qrOne",
-      "/qrTwo",
-    ].includes(route.pathname);
+    !excludedRoutes.some((route) =>
+      new RegExp(`^${route.replace(/:[^\s/]+/g, "[^/]+")}$`).test(
+        location.pathname
+      )
+    );
+
   return (
     <>
-      {showNav && (
-        <>
-          <Sidenav />
-        </>
-      )}
+      {showNav && <Sidenav />}
       <Routes>
         <Route index path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
