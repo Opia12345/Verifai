@@ -33,7 +33,6 @@ const QrTwo = () => {
         setTimeout(() => {
           setScanResult(false);
         }, 3000);
-        localStorage.setItem("enter", "true");
         redirect("/dashboard");
       } else {
         setErr(true);
