@@ -17,6 +17,8 @@ const App = require("./Controllers/App");
 const updateUsername = require("./Controllers/UpdateUsername");
 const allApps = require("./Controllers/AllApps");
 const DeleteApp = require("./Controllers/DeleteApps");
+const AuthOtp = require("./Controllers/AuthOtp");
+const ResendAuthOtp = require("./Controllers/ResendAuthOtp");
 require("dotenv").config();
 
 // CONFIGURATIONS
@@ -44,6 +46,8 @@ app.post("/passwordReset", PasswordReset.PasswordReset);
 app.post("/resend-verification/:userId", resendVerification.resendVerification);
 app.post("/resend-OTP/:userId", ResendOTP.ResendOTP);
 app.post("/OTPConfirmation", OTPConfirmation.OTPConfirmation);
+app.post("/auth-otp", AuthOtp.AuthOtp);
+app.post("/resend-auth-otp/:userId", ResendAuthOtp.ResendAuthOtp);
 
 // APP ENDPOINTS
 app.post("/create-app", App.App);

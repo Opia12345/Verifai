@@ -10,7 +10,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-exports.ResendOTP = async (req, res) => {
+exports.ResendAuthOtp = async (req, res) => {
   const { userId } = req.params;
 
   try {
@@ -25,7 +25,7 @@ exports.ResendOTP = async (req, res) => {
 
     const mailOptions = {
       to: user.Email,
-      subject: "Password Reset Request",
+      subject: "Login Request",
       html: `
         <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
         <tr>
@@ -36,7 +36,7 @@ exports.ResendOTP = async (req, res) => {
         <tr>
             <td style="padding: 40px;">
                 <h3 style="margin-top: 0;">Hello ${user.userName} 👋,</h3>
-                <p>We received a request to reset your password. Please use the following OTP to reset your password. This OTP is valid for 3 minutes:</p>
+                <p>We received a login request to your Valut application. Please use the following OTP to login. This OTP is valid for 3 minutes:</p>
                 <h2 style="display: flex; align-items: center; justify-content: center; font-size: 44px;">${otp}</h2>
                 <p>If you did not request a password reset, you can safely ignore this email.</p>
                 

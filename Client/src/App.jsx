@@ -23,6 +23,7 @@ import OtpTwo from "./Routes/OtpTwo";
 import QrOne from "./Routes/QrOne";
 import QrTwo from "./Routes/QrTwo";
 import Sidenav from "./Components/Sidenav";
+import PrivateRoute from "./Routes/PrivateRoute";
 
 function App() {
   const navigate = useNavigate();
@@ -99,17 +100,89 @@ function App() {
         <Route path="/passwordUpdated" element={<PasswordUpdated />} />
         <Route path="/otpConfirmation/:userId" element={<Otp />} />
         <Route path="/forgotPassword" element={<ForgotPassword />} />
-        <Route path="/otpOne" element={<OtpOne />} />
-        <Route path="/otpTwo" element={<OtpTwo />} />
-        <Route path="/qrOne" element={<QrOne />} />
-        <Route path="/qrTwo" element={<QrTwo />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/generator" element={<PasswordGenerator />} />
-        <Route path="/settings" element={<Settings />} />
-        <Route path="/accountSettings" element={<AccountSettings />} />
-        <Route path="/passwordReset" element={<PasswordReset />} />
-        <Route path="/help" element={<Help />} />
         <Route path="/unauthorized" element={<Fallback />} />
+
+        {/* protected routes  */}
+        <Route
+          path="/otpOne"
+          element={
+            <PrivateRoute>
+              <OtpOne />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/otpTwo"
+          element={
+            <PrivateRoute>
+              <OtpTwo />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/qrOne"
+          element={
+            <PrivateRoute>
+              <QrOne />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/qrTwo"
+          element={
+            <PrivateRoute>
+              <QrTwo />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/dashboard"
+          element={
+            <PrivateRoute>
+              <Dashboard />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/generator"
+          element={
+            <PrivateRoute>
+              <PasswordGenerator />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/settings"
+          element={
+            <PrivateRoute>
+              <Settings />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/accountSettings"
+          element={
+            <PrivateRoute>
+              <AccountSettings />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/passwordReset"
+          element={
+            <PrivateRoute>
+              <PasswordReset />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/help"
+          element={
+            <PrivateRoute>
+              <Help />
+            </PrivateRoute>
+          }
+        />
       </Routes>
     </>
   );

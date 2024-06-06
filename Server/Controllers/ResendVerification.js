@@ -54,7 +54,7 @@ exports.resendVerification = async (req, res) => {
                    CEO,<br />
                 Anthony Pascal. <br /></p>
                 <hr>
-                <p style="text-align: center; font-size: 12px; color: #444;"> © 2024, All rights reserved.<br>You are receiving this email because you signed up on our platform</p>
+                <p style="text-align: center; font-size: 12px; color: #444;"> © 2024 The Vault, All rights reserved.<br>You are receiving this email because you signed up on our platform</p>
             </td>
         </tr>
     </table>

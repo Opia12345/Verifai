@@ -20,6 +20,9 @@ const userSchema = new Schema(
     otp: {
       type: Number,
     },
+    otpExpiration: {
+      type: Number,
+    },
   },
   { timestamps: true }
 );

@@ -96,7 +96,7 @@ const OtpTwo = () => {
     }, 1000);
 
     axios
-      .post(`${apiUrl}/resend-OTP/${userId}`, {
+      .post(`${apiUrl}//resend-auth-otp/${userId}`, {
         withCredentials: true,
       })
       .then((response) => {

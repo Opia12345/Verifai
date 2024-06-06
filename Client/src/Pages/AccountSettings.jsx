@@ -34,6 +34,7 @@ const AccountSettings = () => {
         localStorage.removeItem("user");
         dispatch({ type: "LOGOUT" });
         navigate("/signin");
+        window.location.reload();
       })
       .catch((err) => {
         if (err.response) {

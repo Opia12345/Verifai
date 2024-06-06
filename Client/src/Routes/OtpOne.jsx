@@ -44,7 +44,7 @@ const OtpOne = () => {
   const submitForm = (values, { resetForm }) => {
     setIsSubmitting(true);
     axios
-      .post(`${apiUrl}/passwordReset`, values)
+      .post(`${apiUrl}/auth-otp`, values)
       .then((response) => {
         setErr(null);
         setIsSubmitting(false);
