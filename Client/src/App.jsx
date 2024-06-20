@@ -32,16 +32,7 @@ function App() {
   useEffect(() => {
     if (
       !userId &&
-      ![
-        "/",
-        "/signin",
-        "/emailConfirmed",
-        "/forgotPassword",
-        "/updatePassword/:userId",
-        "/otpConfirmation/:userId",
-        "/passwordUpdated",
-        "/emailConfirmation/:userId",
-      ].includes(location.pathname)
+      !["/", "/signin", "/emailConfirmed"].includes(location.pathname)
     ) {
       navigate("/unauthorized");
     }
