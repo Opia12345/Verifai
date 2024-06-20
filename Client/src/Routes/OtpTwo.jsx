@@ -137,39 +137,43 @@ const OtpTwo = () => {
             <h5 className="flex text-center justify-center text-lg text-slate-400">
               Check your email address and input the sent OTP.
             </h5>
-            <span className="flex items-center bg-slate-200/20 gap-2 rounded-md p-2 mt-4">
-              <FontAwesomeIcon icon={faLock} />
-              <Field
-                type="number"
-                name="otp"
-                placeholder="OTP"
-                className="bg-transparent text-white font-light text-xs w-full outline-none"
+            <div className="relative">
+              <FontAwesomeIcon
+                icon={faLock}
+                className="absolute left-3 top-3 text-gray-400"
               />
-            </span>
-            <ErrorMessage
-              name="otp"
-              component="div"
-              className="text-red-500 text-xs flex items-center"
-            />
+              <Field
+                type="text"
+                name="otp"
+                placeholder="otp"
+                className="pl-10 pr-3 py-2 border text-black border-gray-300 rounded-md w-full focus:outline-none focus:border-blue-500"
+              />
+              <ErrorMessage
+                name="otp"
+                component="div"
+                className="text-red-500 text-sm mt-1"
+              />
+            </div>
 
-            {isSubmitting ? (
-              <button
-                disabled={true}
-                type="submit"
-                className="border rounded-md py-2"
-              >
+            <button
+              type="submit"
+              className={`py-2 rounded-md text-white font-bold transition ${
+                isSubmitting ? "bg-gray-400" : "bg-blue-500 hover:bg-blue-600"
+              }`}
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? (
                 <div className="flex items-center justify-center">
-                  <div className="w-18 h-18 border-8 text-blue-400 text-4xl animate-spin border-gray-300 flex items-center justify-center border-t-blue-400 rounded-full"></div>
+                  <div className="spinner-border animate-spin inline-block w-4 h-4 border-2 rounded-full"></div>
+                  <span className="ml-2">Loading...</span>
                 </div>
-              </button>
-            ) : (
-              <button type="submit" className="border rounded-md py-2 px-6">
-                <div>
+              ) : (
+                <>
                   Continue &nbsp;
                   <FontAwesomeIcon icon={faArrowRight} />
-                </div>
-              </button>
-            )}
+                </>
+              )}
+            </button>
             <div className="flex flex-col items-center mt-8 gap-4">
               <small>Didn't receive an OTP?</small>
               {countdownComplete && (

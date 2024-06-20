@@ -10,7 +10,7 @@ import Register from "./Pages/Register";
 import SignIn from "./Pages/SignIn";
 import EmailConfirmation from "./Routes/EmailConfirmation";
 import EmailConfirmed from "./Routes/EmailConfirmed";
-import ForgotPassword from "./Routes/FogotPassword";
+import ForgotPassword from "./Routes/ForgotPassword";
 import Otp from "./Routes/Otp";
 import UpdatePassword from "./Routes/UpdatePassword";
 import PasswordUpdated from "./Routes/PasswordUpdated";
@@ -32,26 +32,23 @@ function App() {
   useEffect(() => {
     if (
       !userId &&
-      !["/", "/signin", "/emailConfirmed"].includes(location.pathname)
+      ![
+        "/",
+        "/signin",
+        "/options",
+        `/emailConfirmation/${userId}`,
+        "/emailConfirmation",
+        "/emailConfirmed",
+        "/passwordUpdated",
+        `/updatePassword/${userId}`,
+        "/unauthorized",
+        `/otpConfirmation/${userId}`,
+        "/forgotPassword",
+      ].includes(location.pathname)
     ) {
       navigate("/unauthorized");
     }
   }, [userId, location.pathname, navigate]);
-
-  useEffect(() => {
-    const handleBackButton = (event) => {
-      if (!userId) {
-        event.preventDefault();
-        navigate("/");
-      }
-    };
-
-    window.addEventListener("popstate", handleBackButton);
-
-    return () => {
-      window.removeEventListener("popstate", handleBackButton);
-    };
-  }, [userId, navigate]);
 
   const excludedRoutes = [
     "/",

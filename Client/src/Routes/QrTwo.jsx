@@ -11,7 +11,6 @@ import { useNavigate } from "react-router-dom";
 const QrTwo = () => {
   const [scanResult, setScanResult] = useState(null);
   const [err, setErr] = useState(false);
-  const url = "https://thevault-ae9i.onrender.com/dashboard";
   const redirect = useNavigate();
 
   useEffect(() => {
@@ -28,14 +27,21 @@ const QrTwo = () => {
     function success(result) {
       scanner.clear();
       setScanResult(result);
-      if (result === url) {
+      const storedQrCodeValue = localStorage.getItem("qrCodeValue");
+      if (result === storedQrCodeValue) {
         setScanResult(true);
         setTimeout(() => {
           setScanResult(false);
         }, 3000);
         redirect("/dashboard");
+        localStorage.removeItem("qrCodeValue");
       } else {
         setErr(true);
+        setTimeout(() => {
+          setErr(false);
+        }, 4000);
+        redirect("/qrOne")
+        localStorage.removeItem("qrCodeValue");
       }
     }
 

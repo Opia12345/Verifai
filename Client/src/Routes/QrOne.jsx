@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import QRCode from "qrcode.react";
 import * as htmlToImage from "html-to-image";
 import { CSSTransition } from "react-transition-group";
@@ -10,23 +10,42 @@ const QrOne = () => {
   const qrCodeRef = useRef(null);
   const [qrIsVisible, setQrIsVisible] = useState(false);
   const [deets, setDeets] = useState(false);
+  const [qrValue, setQrValue] = useState("");
+
   const handleQrCodeGenerator = () => {
+    const randomValue = generateRandomString(10);
+    const qrCodeUrl = `https://thevault-ae9i.onrender.com/dashboard?code=${randomValue}`;
+    setQrValue(qrCodeUrl);
+    localStorage.setItem("qrCodeValue", qrCodeUrl);
     setQrIsVisible(true);
     setDeets(true);
   };
 
   const downloadQRCode = () => {
-    htmlToImage
-      .toPng(qrCodeRef.current)
-      .then(function (dataUrl) {
-        const link = document.createElement("a");
-        link.href = dataUrl;
-        link.download = "qr-code.png";
-        link.click();
-      })
-      .catch(function (error) {
-        console.error("Error generating QR code:", error);
-      });
+    if (qrCodeRef.current) {
+      htmlToImage
+        .toPng(qrCodeRef.current)
+        .then(function (dataUrl) {
+          const link = document.createElement("a");
+          link.href = dataUrl;
+          link.download = "qr-code.png";
+          link.click();
+        })
+        .catch(function (error) {
+          console.error("Error generating QR code:", error);
+        });
+    }
+  };
+
+  const generateRandomString = (length) => {
+    const characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    let result = "";
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
   };
 
   const styles = {
@@ -41,7 +60,7 @@ const QrOne = () => {
     <>
       <CSSTransition in={deets} classNames={styles} timeout={500} unmountOnExit>
         <div className="fixed top-10 lg:right-[37%] right-4 z-50">
-          <div className=" bg-slate-200/5 backdrop-blur-lg p-4 rounded-md flex items-center justify-center flex-col gap-4 text-center font-bold">
+          <div className="bg-slate-200/5 backdrop-blur-lg p-4 rounded-md flex items-center justify-center flex-col gap-4 text-center font-bold">
             <FontAwesomeIcon
               className="text-green-500"
               icon={faQuestionCircle}
@@ -74,11 +93,13 @@ const QrOne = () => {
             >
               <div className="fixed top-0 right-0 w-full h-screen flex items-center justify-center bg-slate-200/5 backdrop-blur-lg">
                 <div className="flex flex-col items-center" ref={qrCodeRef}>
-                  <QRCode
-                    onClick={downloadQRCode}
-                    value="https://thevault-ae9i.onrender.com/dashboard"
-                    size={300}
-                  />
+                  {qrValue && (
+                    <QRCode
+                      onClick={downloadQRCode}
+                      value={qrValue}
+                      size={300}
+                    />
+                  )}
                 </div>
               </div>
             </CSSTransition>
