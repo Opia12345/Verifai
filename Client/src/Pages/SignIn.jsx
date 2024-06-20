@@ -17,7 +17,6 @@ import axios from "axios";
 import { CSSTransition } from "react-transition-group";
 
 const SignIn = () => {
-  //STATES
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -78,98 +77,105 @@ const SignIn = () => {
   return (
     <>
       <CSSTransition in={error} classNames={styles} timeout={500} unmountOnExit>
-        <div className="fixed top-10 lg:right-[40%] z-50 bg-slate-200/5 backdrop-blur-lg p-4 rounded-md flex items-center justify-center">
-          <h5 className="flex items-center gap-4 text-center font-bold">
-            <FontAwesomeIcon className="text-red-500" icon={faTimesCircle} />
-            <h5>{error}</h5>
+        <div className="fixed top-10 right-1/2 transform translate-x-1/2 z-50 bg-red-500/80 text-white p-4 rounded-md flex items-center justify-center shadow-lg">
+          <h5 className="flex items-center gap-2 font-bold">
+            <FontAwesomeIcon icon={faTimesCircle} />
+            <span>{error}</span>
           </h5>
         </div>
       </CSSTransition>
 
-      <section className="bg-[url(/bg.jpg)] flex justify-center flex-col items-center bg-cover w-full bg-black/60 bg-blend-darken h-screen bg-center">
-        <div className="flex justify-center flex-col items-center w-full p-8">
-          <section className="">
-            <Formik
-              initialValues={initialValues}
-              validationSchema={Validation}
-              onSubmit={submitForm}
-            >
-              <Form
-                className="flex flex-col text-center p-8 rounded-lg justify-center gap-4 frm"
-                id="emailForm"
-              >
-                <h1 className="text-2xl font-bold">
-                  Log Into Your Vault Account
-                </h1>
-                <h5>Easily pick up from where you left off!</h5>
-                <span className="flex items-center bg-slate-200/20 gap-2 rounded-md p-2 mt-4">
-                  <FontAwesomeIcon icon={faEnvelope} />
-                  <Field
-                    type="text"
-                    name="Email"
-                    placeholder="Email"
-                    className="bg-transparent text-white font-light text-xs w-full outline-none"
-                  />
-                </span>
+      <section className="bg-[url('/bg.jpg')] flex justify-center items-center bg-cover w-full bg-black/60 bg-blend-darken min-h-screen">
+        <div className="bg-gray-500/5 backdrop-blur-lg p-8 border-[0.1px] rounded-lg shadow-xl w-full max-w-md">
+          <div className="flex justify-center mb-6">
+            <img src="/logo.png" alt="Logo" className="w-[120px]" />
+          </div>
+          <Formik
+            initialValues={initialValues}
+            validationSchema={Validation}
+            onSubmit={submitForm}
+          >
+            <Form className="flex flex-col gap-4">
+              <h1 className="text-3xl font-bold text-center text-white">
+                Log Into Your Vault Account
+              </h1>
+              <p className="text-center text-slate-400">
+                Easily pick up from where you left off!
+              </p>
+              <div className="relative">
+                <FontAwesomeIcon
+                  icon={faEnvelope}
+                  className="absolute left-3 top-3 text-gray-400"
+                />
+                <Field
+                  type="text"
+                  name="Email"
+                  placeholder="Email"
+                  className="pl-10 pr-3 py-2 border text-black border-gray-300 rounded-md w-full focus:outline-none focus:border-blue-500"
+                />
                 <ErrorMessage
                   name="Email"
                   component="div"
-                  className="text-red-500 text-xs flex items-center "
+                  className="text-red-500 text-sm mt-1"
                 />
-
-                <span className="flex items-center bg-slate-200/20 gap-2 rounded-md p-2 mt-4">
-                  <FontAwesomeIcon icon={faLock} />
-                  <Field
-                    type={showPassword ? "text" : "password"}
-                    name="Password"
-                    placeholder="Password"
-                    className="bg-transparent text-white font-light text-xs w-full outline-none"
-                  />
-                  <FontAwesomeIcon
-                    icon={showPassword ? faEye : faEyeSlash}
-                    onClick={() => setShowPassword(!showPassword)}
-                  />
-                </span>
+              </div>
+              <div className="relative">
+                <FontAwesomeIcon
+                  icon={faLock}
+                  className="absolute left-3 top-3 text-gray-400"
+                />
+                <Field
+                  type={showPassword ? "text" : "password"}
+                  name="Password"
+                  placeholder="Password"
+                  className="pl-10 pr-3 py-2 border text-black border-gray-300 rounded-md w-full focus:outline-none focus:border-blue-500"
+                />
+                <FontAwesomeIcon
+                  icon={showPassword ? faEye : faEyeSlash}
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-3 text-gray-400 cursor-pointer"
+                />
                 <ErrorMessage
                   name="Password"
                   component="div"
-                  className="text-red-500 text-xs flex items-center "
+                  className="text-red-500 text-sm mt-1"
                 />
-
+              </div>
+              <button
+                type="submit"
+                className={`py-2 rounded-md text-white font-bold transition ${
+                  loading ? "bg-gray-400" : "bg-blue-500 hover:bg-blue-600"
+                }`}
+                disabled={loading}
+              >
                 {loading ? (
-                  <button type="submit" className="border rounded-md py-2">
-                    <div className="flex items-center justify-center">
-                      <div className="w-18 h-18 border-8 text-blue-400 text-4xl animate-spin border-gray-300 flex items-center justify-center border-t-blue-400 rounded-full"></div>
-                    </div>
-                  </button>
+                  <div className="flex items-center justify-center">
+                    <div className="spinner-border animate-spin inline-block w-4 h-4 border-2 rounded-full"></div>
+                    <span className="ml-2">Loading...</span>
+                  </div>
                 ) : (
-                  <button type="submit" className="border rounded-md py-2">
-                    <div>
-                      Login &nbsp;
-                      <FontAwesomeIcon icon={faArrowRight} />
-                    </div>
-                  </button>
+                  <>
+                    Login &nbsp;
+                    <FontAwesomeIcon icon={faArrowRight} />
+                  </>
                 )}
-                <h4 className="flex text-center justify-center items-center mt-4 text-slate-400">
-                  <Link
-                    to="/forgotPassword"
-                    className="underline hover:text-white duration-300 ease-in"
-                  >
-                    Forgot Password?
-                  </Link>
-                </h4>
-                <h4 className="flex text-center items-center mt-4 text-slate-400">
-                  Don't have an account?&nbsp;
-                  <Link
-                    to="/register"
-                    className="underline hover:text-white duration-300 ease-in"
-                  >
-                    Register.
-                  </Link>
-                </h4>
-              </Form>
-            </Formik>
-          </section>
+              </button>
+              <p className="text-center text-gray-600 mt-4">
+                <Link
+                  to="/forgotPassword"
+                  className="text-blue-500 hover:underline"
+                >
+                  Forgot Password?
+                </Link>
+              </p>
+              <p className="text-center text-gray-600 mt-4">
+                Don't have an account?&nbsp;
+                <Link to="/" className="text-blue-500 hover:underline">
+                  Register.
+                </Link>
+              </p>
+            </Form>
+          </Formik>
         </div>
       </section>
     </>

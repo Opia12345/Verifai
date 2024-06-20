@@ -9,7 +9,6 @@ import {
   faTimesCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { CSSTransition } from "react-transition-group";
-import Sidenav from "../Components/Sidenav";
 import {
   faEnvelope,
   faPaperPlane,
@@ -44,7 +43,6 @@ const Help = () => {
       "transform translate-x-full opacity-0 transition-all duration-500 ease-in-out",
   };
 
-  //ENVIRONMENTAL VARIABLES
   const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
   const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
   const userId = import.meta.env.VITE_EMAILJS_USER_ID;
@@ -71,14 +69,15 @@ const Help = () => {
           }
         },
         (error) => {
-          setIsSubmitting(false);
-          setErr(error);
+          setLoading(false);
+          setErr(error.text);
           setTimeout(() => {
             setErr(false);
           }, 6000);
         }
       );
   };
+
   return (
     <>
       <CSSTransition
@@ -87,101 +86,106 @@ const Help = () => {
         timeout={500}
         unmountOnExit
       >
-        <div className="fixed top-10 lg:right-[40%] z-50 bg-slate-200/5 backdrop-blur-lg p-4 rounded-md flex items-center justify-center">
-          <h5 className="flex items-center gap-4 text-center font-bold">
-            <FontAwesomeIcon className="text-green-500" icon={faCheckCircle} />
-            <small className="font-semibold">
-              Your message has been sucessfully delivered!
-            </small>
+        <div className="fixed top-10 right-1/2 transform translate-x-1/2 z-50 bg-green-100 text-green-700 p-4 rounded-md flex items-center justify-center shadow-lg">
+          <h5 className="flex items-center gap-2 font-bold">
+            <FontAwesomeIcon icon={faCheckCircle} />
+            <span>Your message has been successfully delivered!</span>
           </h5>
         </div>
       </CSSTransition>
 
       <CSSTransition in={err} classNames={styles} timeout={500} unmountOnExit>
-        <div className="fixed top-10 lg:right-[40%] z-50 bg-slate-200/5 backdrop-blur-lg p-4 rounded-md flex items-center justify-center">
-          <h5 className="flex items-center gap-4 text-center font-bold">
-            <FontAwesomeIcon className="text-red-500" icon={faTimesCircle} />
-            <small className="font-semibold">{err}</small>
+        <div className="fixed top-10 right-1/2 transform translate-x-1/2 z-50 bg-red-100 text-red-700 p-4 rounded-md flex items-center justify-center shadow-lg">
+          <h5 className="flex items-center gap-2 font-bold">
+            <FontAwesomeIcon icon={faTimesCircle} />
+            <span>{err}</span>
           </h5>
         </div>
       </CSSTransition>
 
-      <section className="lg:ml-[250px] lg:p-8 p-4 h-screen">
-        <h1 className="font-bold text-3xl">Contact Us</h1>
-        <div className="w-full lg:p-10 flex items-center justify-center relative flex-col">
-          <div className="w-full -mt-16">
-            <div className="flex lg:p-10 mt-12 relative rounded-lg w-full">
-              <Formik
-                initialValues={initialValues}
-                validationSchema={validationSchema}
-                onSubmit={submitForm}
-              >
-                <Form className="mt-8 w-full flex flex-col" id="emailForm">
-                  <div className="grid lg:grid-cols-2 grid-cols-1 gap-4">
-                    <span className="flex items-center bg-slate-200/20 gap-2 rounded-md p-2">
-                      <FontAwesomeIcon icon={faUser} />
-                      <Field
-                        type="text"
-                        name="name"
-                        placeholder="Name"
-                        className="bg-transparent text-white font-light text-xs w-full outline-none"
-                      />
-                    </span>
-                    <ErrorMessage
-                      name="name"
-                      component="div"
-                      className="text-red-500 text-xs flex items-center"
-                    />
+      <section className="min-h-screen flex justify-center items-center lg:ml-[250px] lg:p-8 p-4 h-screen">
+        <div className="bg-gray-500/5 p-8 rounded-lg shadow-lg w-full max-w-lg">
+          <h1 className="text-3xl font-bold text-center mb-6">Contact Us</h1>
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={submitForm}
+          >
+            <Form className="flex flex-col gap-4">
+              <div className="flex flex-col gap-2">
+                <div className="relative">
+                  <FontAwesomeIcon
+                    icon={faUser}
+                    className="absolute left-3 top-3 text-gray-400"
+                  />
+                  <Field
+                    type="text"
+                    name="name"
+                    placeholder="Name"
+                    className="pl-10 pr-3 py-2 border text-black border-gray-300 rounded-md w-full focus:outline-none focus:border-blue-500"
+                  />
+                  <ErrorMessage
+                    name="name"
+                    component="div"
+                    className="text-red-500 text-sm mt-1"
+                  />
+                </div>
 
-                    <span className="flex items-center bg-slate-200/20 gap-2 rounded-md p-2">
-                      <FontAwesomeIcon icon={faEnvelope} />
-                      <Field
-                        type="email"
-                        name="email"
-                        placeholder="johndoe@gmail.com"
-                        className="bg-transparent text-white font-light text-xs w-full outline-none"
-                      />
-                    </span>
-                    <ErrorMessage
-                      name="email"
-                      component="div"
-                      className="text-red-500 text-xs flex items-center"
-                    />
-                  </div>
+                <div className="relative">
+                  <FontAwesomeIcon
+                    icon={faEnvelope}
+                    className="absolute left-3 top-3 text-gray-400"
+                  />
+                  <Field
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    className="pl-10 pr-3 py-2 border text-black border-gray-300 rounded-md w-full focus:outline-none focus:border-blue-500"
+                  />
+                  <ErrorMessage
+                    name="email"
+                    component="div"
+                    className="text-red-500 text-sm mt-1"
+                  />
+                </div>
 
-                  <span className="flex items-center bg-slate-200/20 gap-2 rounded-md p-2 mt-4">
-                    <Field
-                      as="textarea"
-                      type="text"
-                      name="message"
-                      placeholder="Message"
-                      rows={10}
-                      className="bg-transparent text-white font-light text-xs w-full outline-none"
-                    />
-                  </span>
+                <div className="relative">
+                  <Field
+                    as="textarea"
+                    name="message"
+                    placeholder="Message"
+                    rows={5}
+                    className="pl-3 pr-3 py-2 border text-black border-gray-300 rounded-md w-full focus:outline-none focus:border-blue-500"
+                  />
                   <ErrorMessage
                     name="message"
                     component="div"
-                    className="text-red-500 text-xs flex items-center"
+                    className="text-red-500 text-sm mt-1"
                   />
-                  <button
-                    type="submit"
-                    className="border mt-4 transition duration-300 justify-center ease-in-out text-white flex items-center hover:bg-slate-200/20 cursor-pointer rounded-lg py-2"
-                  >
-                    {loading ? (
-                      <div className="flex items-center justify-center">
-                        <div className="w-18 h-18 border-8 text-blue-400 text-4xl animate-spin border-gray-300 flex items-center justify-center border-t-blue-400 rounded-full"></div>
-                      </div>
-                    ) : (
-                      <span>
-                        Send <FontAwesomeIcon icon={faPaperPlane} />
-                      </span>
-                    )}
-                  </button>
-                </Form>
-              </Formik>
-            </div>
-          </div>
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                className={`py-2 mt-4 rounded-md text-white font-bold transition ${
+                  loading ? "bg-gray-400" : "bg-blue-500 hover:bg-blue-600"
+                }`}
+                disabled={loading}
+              >
+                {loading ? (
+                  <div className="flex items-center justify-center">
+                    <div className="spinner-border animate-spin inline-block w-4 h-4 border-2 rounded-full"></div>
+                    <span className="ml-2">Sending...</span>
+                  </div>
+                ) : (
+                  <>
+                    Send &nbsp;
+                    <FontAwesomeIcon icon={faPaperPlane} />
+                  </>
+                )}
+              </button>
+            </Form>
+          </Formik>
         </div>
       </section>
     </>

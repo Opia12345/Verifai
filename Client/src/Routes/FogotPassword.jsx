@@ -74,57 +74,63 @@ const ForgotPassword = () => {
       </CSSTransition>
 
       <section className="bg-[url(/bg.jpg)] flex justify-center flex-col items-center bg-cover w-full bg-black/60 bg-blend-darken h-screen bg-center">
-        <Formik
-          initialValues={initialValues}
-          validationSchema={Validation}
-          onSubmit={submitForm}
-        >
-          <Form
-            className="flex flex-col text-center p-8 rounded-lg justify-center gap-4 frm"
-            id="emailForm"
+        <div className="bg-gray-500/10 border-[0.1px] backdrop-blur-lg p-8 rounded-lg shadow-xl w-full max-w-md">
+          <Formik
+            initialValues={initialValues}
+            validationSchema={Validation}
+            onSubmit={submitForm}
           >
-            <h2 className="flex justify-center text-3xl font-bold">
-              Reset Your Password
-            </h2>
-            <h5 className="flex text-center justify-center text-lg text-slate-400">
-              Input your email address.
-            </h5>
+            <Form
+              className="flex flex-col text-center p-8 rounded-lg justify-center gap-4 frm"
+              id="emailForm"
+            >
+              <h2 className="flex justify-center text-3xl font-bold">
+                Reset Your Password
+              </h2>
+              <h5 className="flex text-center justify-center text-lg text-slate-400">
+                Input your email address.
+              </h5>
 
-            <span className="flex items-center bg-slate-200/20 gap-2 rounded-md p-2 mt-4">
-              <FontAwesomeIcon icon={faEnvelope} />
-              <Field
-                type="email"
-                name="Email"
-                placeholder="Email Address"
-                className="bg-transparent text-white font-light text-xs w-full outline-none"
-              />
-            </span>
-            <ErrorMessage
-              name="Email"
-              component="div"
-              className="text-red-500 text-xs flex items-center"
-            />
+              <div className="relative">
+                <FontAwesomeIcon
+                  icon={faEnvelope}
+                  className="absolute left-3 top-3 text-gray-400"
+                />
+                <Field
+                  type="text"
+                  name="Email"
+                  placeholder="Email"
+                  className="pl-10 pr-3 py-2 border text-black border-gray-300 rounded-md w-full focus:outline-none focus:border-blue-500"
+                />
+                <ErrorMessage
+                  name="Email"
+                  component="div"
+                  className="text-red-500 text-sm mt-1"
+                />
+              </div>
 
-            {isSubmitting ? (
               <button
-                disabled={true}
                 type="submit"
-                className="border rounded-md py-2"
+                className={`py-2 rounded-md text-white font-bold transition ${
+                  isSubmitting ? "bg-gray-400" : "bg-blue-500 hover:bg-blue-600"
+                }`}
+                disabled={isSubmitting}
               >
-                <div className="flex items-center justify-center">
-                  <div className="w-18 h-18 border-8 text-blue-400 text-4xl animate-spin border-gray-300 flex items-center justify-center border-t-blue-400 rounded-full"></div>
-                </div>
+                {isSubmitting ? (
+                  <div className="flex items-center justify-center">
+                    <div className="spinner-border animate-spin inline-block w-4 h-4 border-2 rounded-full"></div>
+                    <span className="ml-2">Loading...</span>
+                  </div>
+                ) : (
+                  <>
+                    Continue &nbsp;
+                    <FontAwesomeIcon icon={faArrowRight} />
+                  </>
+                )}
               </button>
-            ) : (
-              <button type="submit" className="border rounded-md py-2">
-                <div>
-                  Continue &nbsp;
-                  <FontAwesomeIcon icon={faArrowRight} />
-                </div>
-              </button>
-            )}
-          </Form>
-        </Formik>
+            </Form>
+          </Formik>
+        </div>
       </section>
     </>
   );

@@ -1,6 +1,5 @@
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import "../tailwind/Output.css";
-import Home from "./Pages/Home";
 import Dashboard from "./Pages/Dashboard";
 import PasswordGenerator from "./Pages/PasswordGenerator";
 import Settings from "./Pages/Settings";
@@ -33,9 +32,16 @@ function App() {
   useEffect(() => {
     if (
       !userId &&
-      !["/", "/register", "/signin", "/emailConfirmed"].includes(
-        location.pathname
-      )
+      ![
+        "/",
+        "/signin",
+        "/emailConfirmed",
+        "/forgotPassword",
+        "/updatePassword/:userId",
+        "/otpConfirmation/:userId",
+        "/passwordUpdated",
+        "/emailConfirmation/:userId",
+      ].includes(location.pathname)
     ) {
       navigate("/unauthorized");
     }
@@ -58,7 +64,6 @@ function App() {
 
   const excludedRoutes = [
     "/",
-    "/register",
     "/signin",
     "/options",
     "/emailConfirmation/:userId",
@@ -87,8 +92,7 @@ function App() {
     <>
       {showNav && <Sidenav />}
       <Routes>
-        <Route index path="/" element={<Home />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/" element={<Register />} />
         <Route path="/signin" element={<SignIn />} />
         <Route
           path="/emailConfirmation/:userId"
