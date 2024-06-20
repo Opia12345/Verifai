@@ -78,10 +78,10 @@ const EmailConfirmation = () => {
   return (
     <>
       <CSSTransition in={err} classNames={styles} timeout={500} unmountOnExit>
-        <div className="fixed top-10 lg:right-[40%] z-50 bg-slate-200/5 backdrop-blur-lg p-4 rounded-md flex items-center justify-center">
-          <h5 className="flex items-center gap-4 text-center font-bold">
-            <FontAwesomeIcon className="text-red-500" icon={faTimesCircle} />
-            <h5>{err}</h5>
+        <div className="fixed top-10 right-1/2 transform translate-x-1/2 z-50 bg-red-500/80 text-white p-4 rounded-md flex items-center justify-center shadow-lg">
+          <h5 className="flex items-center gap-2 font-bold">
+            <FontAwesomeIcon icon={faTimesCircle} />
+            <span>{err}</span>
           </h5>
         </div>
       </CSSTransition>

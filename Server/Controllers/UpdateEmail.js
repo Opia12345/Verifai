@@ -43,7 +43,7 @@ exports.updateEmail = async (req, res) => {
       html: `<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 400px; background: white; color: black;">
         <tr>
             <td align="center">
-                <img src="cid:logo" alt="Logo" style="width: 100%; display: block;">
+                <img src="cid:logo" alt="Logo" style="width: 40%; display: block;">
             </td>
         </tr>
         <tr>

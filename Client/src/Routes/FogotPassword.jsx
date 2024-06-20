@@ -65,11 +65,11 @@ const ForgotPassword = () => {
   return (
     <>
       <CSSTransition in={err} classNames={styles} timeout={500} unmountOnExit>
-        <div className="flex justify-center fixed bottom-10 right-10">
-          <div className="flex items-center justify-center space-x-4 bg-red-700/30 w-auto px-4 py-2 rounded-md h-[40px]">
+        <div className="fixed top-10 right-1/2 transform translate-x-1/2 z-50 bg-red-500/80 text-white p-4 rounded-md flex items-center justify-center shadow-lg">
+          <h5 className="flex items-center gap-2 font-bold">
             <FontAwesomeIcon icon={faTimesCircle} />
-            <small className="font-semibold">{err}</small>
-          </div>
+            <span>{err}</span>
+          </h5>
         </div>
       </CSSTransition>
 

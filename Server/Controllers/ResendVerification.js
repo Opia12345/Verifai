@@ -32,10 +32,10 @@ exports.resendVerification = async (req, res) => {
       to: user.Email,
       subject:
         "Welcome to The Vault - Secure Your Account with Password Storage",
-      html: `<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 400px; background: white; color: black;">
+      html: `<table align="center" border="0" cellpadding="0" cellspacing="0" width="40%">
         <tr>
-            <td align="center">
-                <img src="cid:logo" alt="Logo" style="width: 100%; display: block;">
+            <td align="center" bgcolor="#000000">
+                <img src="cid:logo" alt="Logo" style="width: 40%; display: block;">
             </td>
         </tr>
         <tr>
