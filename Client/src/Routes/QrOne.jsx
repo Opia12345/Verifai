@@ -5,12 +5,15 @@ import { CSSTransition } from "react-transition-group";
 import { faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
+import { saveAs } from "file-saver";
 
 const QrOne = () => {
   const qrCodeRef = useRef(null);
   const [qrIsVisible, setQrIsVisible] = useState(false);
   const [deets, setDeets] = useState(false);
   const [qrValue, setQrValue] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [isReadyToDownload, setIsReadyToDownload] = useState(false);
 
   const handleQrCodeGenerator = () => {
     const randomValue = generateRandomString(10);
@@ -25,13 +28,10 @@ const QrOne = () => {
     if (qrCodeRef.current) {
       htmlToImage
         .toPng(qrCodeRef.current)
-        .then(function (dataUrl) {
-          const link = document.createElement("a");
-          link.href = dataUrl;
-          link.download = "qr-code.png";
-          link.click();
+        .then((dataUrl) => {
+          saveAs(dataUrl, "qr-code.png");
         })
-        .catch(function (error) {
+        .catch((error) => {
           console.error("Error generating QR code:", error);
         });
     }
@@ -41,12 +41,23 @@ const QrOne = () => {
     const characters =
       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     let result = "";
-    const charactersLength = characters.length;
     for (let i = 0; i < length; i++) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      result += characters.charAt(
+        Math.floor(Math.random() * characters.length)
+      );
     }
     return result;
   };
+
+  useEffect(() => {
+    if (qrIsVisible) {
+      setLoading(true);
+      setTimeout(() => {
+        setIsReadyToDownload(true);
+        setLoading(false);
+      }, 4000);
+    }
+  }, [qrIsVisible]);
 
   const styles = {
     enter: "transform -translate-x-full opacity-0",
@@ -59,7 +70,7 @@ const QrOne = () => {
   return (
     <>
       <CSSTransition in={deets} classNames={styles} timeout={500} unmountOnExit>
-        <div className="fixed top-10 lg:right-[37%] right-4 z-50">
+        <div className="fixed top-10 lg:right-[40%] lg:w-auto w-full z-50">
           <div className="bg-slate-200/5 backdrop-blur-lg p-4 rounded-md flex items-center justify-center flex-col gap-4 text-center font-bold">
             <FontAwesomeIcon
               className="text-green-500"
@@ -68,7 +79,7 @@ const QrOne = () => {
             <h5>Click the QR code to download it.</h5>
             <Link to="/qrTwo">
               <h5 className="underline cursor-pointer">
-                Upload the downloaded document to login
+                Proceed to QR Scanner
               </h5>
             </Link>
           </div>
@@ -92,15 +103,19 @@ const QrOne = () => {
               unmountOnExit
             >
               <div className="fixed top-0 right-0 w-full h-screen flex items-center justify-center bg-slate-200/5 backdrop-blur-lg">
-                <div className="flex flex-col items-center" ref={qrCodeRef}>
-                  {qrValue && (
-                    <QRCode
-                      onClick={downloadQRCode}
-                      value={qrValue}
-                      size={300}
-                    />
-                  )}
-                </div>
+                {loading ? (
+                  <div className="flex flex-col items-center">
+                    <div className="loader"></div>
+                  </div>
+                ) : (
+                  <div
+                    className="flex flex-col items-center"
+                    ref={qrCodeRef}
+                    onClick={() => isReadyToDownload && downloadQRCode()}
+                  >
+                    {qrValue && <QRCode value={qrValue} size={300} />}
+                  </div>
+                )}
               </div>
             </CSSTransition>
           </div>
