@@ -45,6 +45,9 @@ const appSchema = new Schema(
     appUrl: {
       type: String,
     },
+    userId: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

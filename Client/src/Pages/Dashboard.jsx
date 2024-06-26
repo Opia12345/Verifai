@@ -32,6 +32,7 @@ const Dashboard = () => {
   const [password, setPassword] = useState(false);
   const [copy, setCopy] = useState(false);
   const [selectedApp, setSelectedApp] = useState(null);
+  const userId = JSON.parse(localStorage.getItem("user"))?.userId;
   const apiUrl = getApiUrl(process.env.NODE_ENV);
   const [apps, setApps] = useState([]);
   const getDefaultImage = (appName) => {
@@ -60,15 +61,19 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchApps = async () => {
       try {
-        const response = await axios.get(`${apiUrl}/apps`);
+        const response = await axios.get(`${apiUrl}/apps`, {
+          params: { userId },
+        });
         setApps(response.data);
       } catch (error) {
         console.error("Error fetching apps:", error);
       }
     };
 
-    fetchApps();
-  }, [apiUrl]);
+    if (userId) {
+      fetchApps();
+    }
+  }, [apiUrl, userId]);
 
   const styles = {
     enter: "transform -translate-x-full opacity-0",
@@ -112,6 +117,7 @@ const Dashboard = () => {
       appPassword: values.appPassword,
       appImage: values.appImage,
       appUrl: values.appUrl || "",
+      userId,
     };
 
     try {

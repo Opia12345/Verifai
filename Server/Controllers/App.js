@@ -9,7 +9,11 @@ const Validation = Yup.object().shape({
 });
 
 exports.App = async (req, res) => {
-  const { appName, appEmail, appPassword, appUrl } = req.body;
+  const { appName, appEmail, appPassword, appUrl, userId } = req.body;
+
+  if (!userId) {
+    return res.status(400).json({ error: "User ID is required" });
+  }
 
   try {
     const validationSchema = Validation;
@@ -23,6 +27,7 @@ exports.App = async (req, res) => {
       appEmail,
       appPassword,
       appUrl,
+      userId,
     });
 
     await newUser.save();
