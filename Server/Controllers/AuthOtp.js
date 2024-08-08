@@ -51,7 +51,7 @@ exports.AuthOtp = async (req, res) => {
               <h3 style="margin-top: 0;">Hello ${existingUser.userName} 👋,</h3>
               <p>We received a login request to your Valut application. Please use the following OTP to login. This OTP is valid for 3 minutes:</p>
               <h2 style="display: flex; align-items: center; justify-content: center; font-size: 44px;">${otp}</h2>
-              <p>If you did not request a password reset, you can safely ignore this email.</p>
+              <p>If you did not request a login, please contact support immediately.</p>
               
               <p>Best regards,<br />
               CEO,<br />
